@@ -1,326 +1,297 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>IND.Coin </title>
-  <link rel="icon" href="https://i.ibb.co/xqLwJ8bd/IMG-20250518-124828-459.webp" type="image/png">
+  <title>IND.Coin Game</title>
+  <link rel="icon" href="https://i.ibb.co/C38bkf7H/IMG-20250622-032411-164.webp" type="image/png">
   <style>
-    html, body { min-height: 100vh; width: 100vw; margin: 0; padding: 0; box-sizing: border-box; overflow-x: hidden; background: linear-gradient(120deg, #FFD700 0%, #FFA600 100%); background-size: 200% 200%; animation: moveBg 12s linear infinite alternate;}
-    @keyframes moveBg { 0% {background-position: 0% 0%;} 100% {background-position: 100% 100%;}}
-    body { font-family: 'Segoe UI', Arial, sans-serif; color: #7b5600; min-height: 100vh;}
-    #splash-screen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: linear-gradient(135deg, #FFD700 0%, #FFA600 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 10000; box-shadow: 0 22px 70px #FFD70033, 0 2px 18px #fffbe6cc inset; animation: splashIn 0.7s cubic-bezier(.29,1.25,.45,1) 1;}
-    @keyframes splashIn { 0% { opacity: 0; transform: scale(0.93) translateY(48px);} 100% { opacity: 1; transform: scale(1) translateY(0);}}
-    .welcome-photo { width: 108px; height: 108px; border-radius: 50%; margin-bottom: 22px; object-fit: cover; background: #fff; box-shadow: 0 2px 22px #FFD70099, 0 3px 18px #FFA60055, 0 0 0 12px #fffbe6cc; animation: spin 0.6s linear infinite, glow 1.2s ease-in-out infinite alternate;}
-    @keyframes spin {0%{transform:rotate(0);}100%{transform:rotate(360deg);}}
-    @keyframes glow { 0% { box-shadow: 0 2px 22px #FFD70099, 0 3px 18px #FFA60055, 0 0 0 12px #fffbe6cc;} 100% { box-shadow: 0 0px 30px 10px #FFD700cc, 0 8px 36px #FFA60055 inset, 0 0 0 18px #fffbe6;}}
-    .start-btn-3d { background: linear-gradient(145deg, #FFD700 60%, #FFA600 100%); border: 3.5px solid #fffbe6; border-radius: 50%; width: 84px; height: 84px; color: #fff; font-size: 2rem; display: flex; align-items: center; justify-content: center; margin: 24px auto 0 auto; box-shadow: 0 8px 32px #FFD70055, 0 1.5px 0 #ffe066 inset; cursor: pointer; transition: transform 0.14s, box-shadow 0.18s;}
-    .start-btn-3d:hover { background: #FFA600; box-shadow: 0 12px 24px #FFD70077;}
-    .start-btn-3d:active { transform: scale(0.93); box-shadow: 0 2px 9px #FFA60077;}
-    .start-icon-3d {width:48px;height:48px;}
-    .tab-bar { display: flex; justify-content: space-around; background: linear-gradient(90deg, #FFD700 60%, #FFA600 100%); border-top: 2px solid #FFD700; padding: 4px 0 2px 0; position: fixed; bottom: 0; width: 100vw; height: 62px; z-index: 1000; box-shadow: 0 -6px 22px #FFD70055, 0 2px 22px #fffbe6bb inset; backdrop-filter: blur(3px);}
-    .tab-button { background: none; border: none; border-radius: 10px; color: #7b5600; font-size: 13px; display: flex; flex-direction: column; align-items: center; padding: 3px 0 1px 0; flex: 1; height: 58px; font-weight: 600; box-shadow: 0 3px 12px #ffd7002a, 0 1.5px 0 #ffe066 inset; transition: transform 0.16s, box-shadow 0.18s, background 0.18s, color 0.18s;}
-    .tab-button:active {transform: translateY(2px) scale(0.97); box-shadow: 0 1px 4px #ffd70059;}
-    .tab-button.active, .tab-button:focus { background: linear-gradient(90deg, #ffe68c 80%, #FFD700 100%); color: #FFA600; box-shadow: 0 6px 18px #FFD70077, 0 2px 12px #ffe06622 inset;}
-    .bar-custom-icon { width: 32px; height: 32px; border-radius: 50%; box-shadow: 0 0 12px 4px #FFD700, 0 4px 12px #FFA60066; background: #fff; border: 2px solid #FFD700; margin-bottom: 2px; transition: box-shadow 0.18s, border 0.18s;}
-    .tab-button.active .bar-custom-icon,.tab-button:focus .bar-custom-icon { box-shadow: 0 0 18px 7px #FFD700dd, 0 6px 16px #FFA60088; border: 2.5px solid #FFA600;}
-    .centered, .balance-card, .wallet-balance-card { max-width: 480px; margin: 0 auto; padding: 18px 18px 8px 18px; text-align: center; background: linear-gradient(120deg, #fffbe6cc 60%, #ffd70011 100%); border-radius: 18px; box-shadow: 0 12px 38px #FFD70033, 0 1.5px 0 #ffe066 inset; border: 2px solid #ffe066; transition: box-shadow 0.22s;}
-    .centered:hover,.centered:focus-within { box-shadow: 0 20px 44px #ffd70033, 0 1.5px 0 #ffe066 inset;}
-    .balance-card {margin: 18px auto 12px;padding: 13px 22px;max-width: 310px;font-size: 19px;border-radius: 14px; background: linear-gradient(90deg, #FFD700 65%, #FFA600 100%); color: #7b5600;font-weight: 700; box-shadow: 0 1px 8px #FFD70033;}
-    .balance-card.usdt {margin-top: 22px;background: linear-gradient(90deg, #fffbe6 60%, #FFE066 100%);color: #B07B00;}
-    .fan-image { width: 124px; height: 124px; margin: 18px auto 8px; border-radius: 50%; background-image: url('https://i.ibb.co/xqLwJ8bd/IMG-20250518-124828-459.webp'); background-size: cover; background-position: center; box-shadow: 0 8px 28px #FFD70088, 0 6px 22px #fffbe6aa inset, 0 0 0 12px #fffbe6cc; border: 4px solid #FFD700; background-color: #fffbe6; animation: spin 0.5s linear infinite, glow 1.2s ease-in-out infinite alternate;}
-    .tfun-btn, .tfun-save-btn, .exchange-btn { background: linear-gradient(120deg, #fffbe6 85%, #FFE066 100%); color: #B07B00; font-size: 15px; font-weight: 700; padding: 11px 28px; border: 2.2px solid #FFD700; border-radius: 10px; display: flex; align-items: center; gap: 7px; cursor: pointer; box-shadow: 0 4px 22px #FFD70033, 0 1.5px 0 #ffe066 inset; outline: none; transition: transform 0.13s, box-shadow 0.18s, background 0.18s, color 0.18s;}
-    .tfun-btn:hover, .tfun-btn:focus, .exchange-btn:hover, .exchange-btn:focus, .tfun-save-btn:hover, .tfun-save-btn:focus { background: linear-gradient(90deg, #FFD700 70%, #FFA600 100%); color: #fff; border-color: #FFA600; box-shadow: 0 7px 18px #FFD70055;}
-    .tfun-btn:active, .tfun-save-btn:active, .exchange-btn:active { transform: translateY(2px) scale(0.97); box-shadow: 0 1px 3px #ffd70044;}
-    .social-icons img { width:32px;height:32px;border-radius:7px;cursor:pointer; border:2px solid #FFD700;background:#fff;box-shadow:0 1px 8px #FFD70022; transition:box-shadow 0.14s, border 0.14s, transform 0.18s;}
-    .social-icons img:hover {border:2px solid #FFA600;box-shadow:0 3px 14px #FFD70099; transform: scale(1.13);}
-    .ind-footer { width:100vw;background: linear-gradient(90deg, #FFD700 70%, #FFA600 100%); color:#7b5600;text-align:center;font-size:15px;padding:16px 0 18px 0; font-weight:700;position:fixed;left:0;bottom:0;z-index:999;letter-spacing:0.3px; box-shadow:0 -2px 10px #FFD70022, 0 3px 12px #fffbe6bb inset; pointer-events:none;user-select:none;}
-    .footer-logo {width:24px;height:24px;vertical-align:middle;border-radius:50%;margin-left:7px; box-shadow:0 1px 5px #FFD70033;border:2px solid #fff;background:#fff;}
-    .tab-content {min-height: calc(100vh - 62px);padding: 0 0 92px 0;margin: 0;box-sizing: border-box; background: linear-gradient(120deg, #FFFBE6 0%, #FFD70011 100%);}
-    .button-row {display:flex;justify-content:center;gap:13px;margin:20px 0 24px;}
-    .assets-options {display:flex;flex-direction:column;gap:14px;margin:22px 0;}
-    .exchange-row {display:flex;flex-direction:column;gap:12px;margin-top:12px;}
-    .more-options {padding:0 2px;display:flex;flex-direction:column;gap:14px;margin-top:16px;}
-    @media (max-width: 650px) { .centered, .balance-card, .wallet-balance-card { max-width: 98vw; } .tab-bar {height: 62px;} }
+    html, body {min-height:100vh; width:100vw; margin:0; padding:0; box-sizing:border-box; overflow-x:hidden; background:linear-gradient(120deg,#FFD700 0%,#FFA600 100%);background-size:200% 200%;animation:moveBg 12s linear infinite alternate;}
+    @keyframes moveBg {0%{background-position:0% 0%;}100%{background-position:100% 100%;}}
+    body{font-family:'Segoe UI',Arial,sans-serif;color:#7b5600;}
+    #splash-screen{position:fixed;top:0;left:0;width:100vw;height:100vh;background:linear-gradient(135deg,#FFD700 0%,#FFA600 100%);display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:10000;}
+    @keyframes rotate3d { 0% { transform: rotateY(0deg) rotateZ(0deg);} 100% { transform: rotateY(360deg) rotateZ(360deg);}}
+    .fan-image{
+      animation: rotate3d 2.8s linear infinite;
+      box-shadow: 0 2px 22px #FFD70099, 0 3px 18px #FFA60055, 0 0 0 12px #fffbe6cc;
+      perspective: 400px;
+      width:124px;height:124px;margin:18px auto 8px;
+      border-radius:50%;
+      background-image:url('https://i.ibb.co/C38bkf7H/IMG-20250622-032411-164.webp');
+      background-size:cover;background-position:center;
+      border:4px solid #FFD700;cursor:pointer;
+      transition: animation-duration 0.2s;
+    }
+    .fan-image.fast-spin {animation-duration: 0.93s !important;}
+    .welcome-photo{width:108px;height:108px;border-radius:50%;margin-bottom:38px;object-fit:cover;background:#fff;box-shadow:0 2px 22px #FFD70099,0 3px 18px #FFA60055,0 0 0 12px #fffbe6cc;transition: box-shadow 0.2s, transform 0.15s;perspective: 400px;}
+    .welcome-photo.rotate {animation: rotate3d 1.25s linear infinite;}
+    .splash-title-btn {color:#FFD700;letter-spacing:1px;font-size:2.1em;font-weight:800;cursor:pointer;padding:10px 32px;border-radius:16px;transition:background 0.2s, box-shadow 0.2s;box-shadow:0 2px 24px #FFD70033;user-select:none;border:none;background:linear-gradient(90deg,#fffbe6 70%,#FFD700 100%);outline:none;margin-bottom:8px;}
+    .splash-title-btn:active, .splash-title-btn:hover {background:linear-gradient(90deg,#FFD700 70%,#FFA600 100%);color:#B07B00;}
+    .tab-bar{display:flex;justify-content:space-around;background:linear-gradient(90deg,#FFD700 60%,#FFA600 100%);border-top:2px solid #FFD700;padding:4px 0 2px 0;position:fixed;left:0;bottom:62px;width:100vw;height:62px;z-index:1000;box-shadow:0 -6px 22px #FFD70055, 0 2px 22px #fffbe6bb inset;backdrop-filter: blur(3px);margin-bottom:0;}
+    .tab-button{background:none;border:none;border-radius:10px;color:#7b5600;font-size:13px;display:flex;flex-direction:column;align-items:center;flex:1;height:58px;font-weight:600;}
+    .tab-button.active{background:linear-gradient(90deg,#ffe68c 80%,#FFD700 100%);color:#FFA600;}
+    .bar-custom-icon{width:22px;height:22px;border-radius:50%;box-shadow:0 0 8px 2px #FFD700,0 2px 7px #FFA60044;background:#fff;border:2px solid #FFD700;margin-bottom:2px;object-fit:cover;}
+    .centered{max-width:480px;margin:0 auto;padding:18px 18px 8px 18px;text-align:center;background:linear-gradient(120deg,#fffbe6cc 60%,#ffd70011 100%);border-radius:18px;}
+    .balance-card{margin:18px auto 12px;padding:13px 22px;max-width:310px;font-size:19px;border-radius:14px;background:linear-gradient(90deg,#FFD700 65%,#FFA600 100%);color:#7b5600;font-weight:700;}
+    .tfun-btn{background:linear-gradient(120deg,#fffbe6 85%,#FFE066 100%);color:#B07B00;font-size:15px;font-weight:700;padding:11px 28px;border:2.2px solid #FFD700;border-radius:10px;display:flex;align-items:center;gap:7px;cursor:pointer;margin-bottom:7px;}
+    .tfun-btn img{filter:grayscale(0) brightness(1) sepia(1) hue-rotate(-30deg) saturate(5) brightness(1.3);}
+    .more-options{padding:0 2px;display:flex;flex-direction:column;gap:14px;margin-top:16px;}
+    .ind-footer{width:100vw;background:linear-gradient(90deg,#FFD700 70%,#FFA600 100%);color:#7b5600;text-align:center;font-size:15px;padding:16px 0 18px 0;font-weight:700;position:fixed;left:0;bottom:0;z-index:999;letter-spacing:0.3px;box-shadow:0 -2px 10px #FFD70022, 0 3px 12px #fffbe6bb inset;pointer-events:none;user-select:none;}
+    .footer-logo{width:24px;height:24px;vertical-align:middle;border-radius:50%;margin-left:7px;object-fit:cover;}
+    .tab-content{min-height:calc(100vh - 124px);padding:0 0 92px 0;background:linear-gradient(120deg,#FFFBE6 0%,#FFD70011 100%);}
+    .button-row{display:flex;flex-wrap:wrap;justify-content:center;gap:13px;margin:20px 0 24px;}
+    #invite-success-msg { color: #388e3c; font-weight:bold; font-size:15px; margin:12px 0 0 0; }
+    #supportModal, #legalModal, #languageModal, #friendListModal {display:none;position:fixed;left:0;top:0;width:100vw;height:100vh;z-index:999999;background:rgba(0,0,0,0.18);align-items:center;justify-content:center;}
+    #supportModal > div, #legalModal > div, #languageModal > div, #friendListModal > div {background:#fffbe6;max-width:340px;width:95vw;border-radius:14px;box-shadow:0 4px 18px #FFD70066;padding:0;display:flex;flex-direction:column;}
+    .lang-list{padding:24px 18px 18px 18px;display:flex;flex-direction:column;gap:10px;}
+    .lang-item{display:flex;align-items:center;gap:13px;background:#ffe06633;padding:10px 13px;border-radius:8px;cursor:pointer;font-size:16px;transition:background 0.18s;}
+    .lang-item.selected,.lang-item:hover{background:linear-gradient(90deg,#FFD700 60%,#FFA600 100%);color:#B07B00;}
+    .lang-flag{width:22px;height:22px;border-radius:4px;object-fit:cover;border:1px solid #FFD700;}
+    @media (max-width:650px){
+      .centered,.balance-card{max-width:98vw;}
+      .tab-bar{height:62px;}
+      .ind-footer{font-size:13px;}
+      #supportModal > div, #legalModal > div, #languageModal > div, #friendListModal > div {max-width:98vw;}
+    }
   </style>
 </head>
 <body>
 <!-- Splash Screen -->
 <div id="splash-screen">
-  <img src="https://i.ibb.co/xqLwJ8bd/IMG-20250518-124828-459.webp" alt="Welcome" class="welcome-photo" />
-  <h1 style="color:#FFD700;letter-spacing:1px;font-size:2.1em;">IND.Coin</h1>
-  <button class="start-btn-3d" id="startGameBtn" tabindex="0">
-    <img src="https://img.icons8.com/ios-filled/90/ffffff/play--v1.png" alt="Start" class="start-icon-3d"/>
+  <img src="https://i.ibb.co/C38bkf7H/IMG-20250622-032411-164.webp" alt="Welcome" class="welcome-photo" id="splashPhoto" />
+  <button class="splash-title-btn" id="startGameBtn">
+    IND.Coin
   </button>
 </div>
-<!-- Home Tab Content -->
+<!-- Home Tab -->
 <div id="home" class="tab-content" style="display:none;">
   <div class="centered">
-    <div class="balance-card usdt" id="usdt-balance-card">
-      Balance: <strong><span id="usdt-balance">0.00</span> USDT</strong>
+    <div class="balance-card" id="balance-card">
+      Balance: <strong>0.000000 IND.COIN</strong>
     </div>
-    <div class="balance-card" id="balance-card">Balance: <strong>0.000000 IND.COIN</strong></div>
-    <div class="fan-image"></div>
+    <div class="fan-image" id="fanImage"></div>
     <div style="font-size:16px;margin-bottom:5px;color:#B07B00;">
       <span id="live-balance">0.000000000 IND.coin</span>
     </div>
     <div style="font-size:14px;color:#B07B00;">
-      Hashrate: <span id="hashrate-display">2</span> GH/s ⚡
+      <span class="label-hashrate">Hashrate</span>: <span id="hashrate-display">2</span> GH/s ⚡
     </div>
     <div class="button-row">
       <button class="tfun-btn" id="claimBtn" onclick="claimCoins()">
-        <img src="https://img.icons8.com/ios-filled/50/stack-of-coins.png" width="20" /> Claim
+        <img src="https://img.icons8.com/ios-filled/50/FFD700/stack-of-coins.png" width="20" /> <span class="label-claim">Claim</span>
       </button>
       <button class="tfun-btn" onclick="boostHashrate()">
-        <img src="https://img.icons8.com/ios-filled/50/upload.png" width="20" /> Boost
+        <img src="https://img.icons8.com/ios-filled/50/FFD700/flash-on.png" width="20" /> <span class="label-boost">Boost</span>
       </button>
     </div>
-    <div class="social-icons">
-      <a href="https://t.me/Unique_IND_coin_bot" target="_blank" onclick="giveSocialBonus('telegram', event)">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram" />
-      </a>
-      <a href="https://www.facebook.com/share/1Frxw91MUM/" target="_blank" onclick="giveSocialBonus('facebook', event)">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook" />
-      </a>
-      <a href="https://www.instagram.com/ind.coin.in" target="_blank" onclick="giveSocialBonus('instagram', event)">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" />
-      </a>
-      <a href="https://www.threads.net/@ind.coin.in" target="_blank" onclick="giveSocialBonus('threads', event)">
-        <img src="https://cdn-icons-png.flaticon.com/512/5968/5968885.png" alt="Threads" />
-      </a>
-    </div>
+    <div id="invite-success-msg"></div>
     <div style="margin-top:25px;color:#B07B00;font-size:12px;">
-      Your user ID: <span id="userId"></span>
+      <span class="label-userid">Your user ID</span>: <span id="userId"></span>
     </div>
   </div>
 </div>
-<!-- Assets Tab Content -->
-<div id="assets" class="tab-content" style="display:none;">
-  <div class="centered">
-    <h2 style="color:#B07B00;">
-      <img src="https://i.ibb.co/xqLwJ8bd/IMG-20250518-124828-459.webp" style="vertical-align:middle;width:28px;height:28px;"/> Assets
-    </h2>
-    <div class="balance-card" id="wallet-balance-card">
-      Assets Balance: <strong>0.000000 IND.coin</strong>
-    </div>
-    <button class="tfun-btn exchange-btn" id="exchangeMainBtn" onclick="toggleExchangeMenu()">
-      <img src="https://img.icons8.com/ios-filled/30/FFD700/currency-exchange.png" width="26" alt="Exchange Icon"/>
-      Exchange 
-    </button>
-    <div class="exchange-row" id="exchangeOptions" style="display:none;">
-      <button class="tfun-btn" id="usdt2indBtn">
-        <img src="https://img.icons8.com/ios-filled/50/FFD700/us-dollar-circled--v1.png" width="22" />
-        USDT <span style="margin:0 8px;">⇄</span> IND.coin
-      </button>
-      <button class="tfun-btn" id="ind2usdtBtn">
-        <img src="https://img.icons8.com/ios-filled/50/FFD700/coins.png" width="22" />
-        IND.coin <span style="margin:0 8px;">⇄</span> USDT
-      </button>
-    </div>
-    <div class="assets-options">
-      <button class="tfun-btn" onclick="openDepositModal()">
-        <img src="https://img.icons8.com/ios-filled/50/FFD700/download-2.png" width="18" /> Deposit
-      </button>
-      <button class="tfun-btn" onclick="alert('Withdrawal Coming Soon!')">
-        <img src="https://img.icons8.com/ios-filled/50/fa314a/upload.png" width="18" /> Withdrawal
-      </button>
-      <button class="tfun-btn" onclick="alert('Settings Coming Soon!')">
-        <img src="https://img.icons8.com/ios-filled/50/FFD700/settings.png" width="18" /> Setting
-      </button>
-      <button class="tfun-btn" onclick="alert('History Coming Soon!')">
-        <img src="https://img.icons8.com/ios-filled/50/FFD700/activity-history.png" width="18" /> History
-      </button>
-    </div>
-    <p style="color:#B07B00;font-size:13px;margin-top:20px;">Withdrawal program soon...</p>
-  </div>
-</div>
-<!-- Stake Tab Content -->
-<div id="stake" class="tab-content" style="display:none;">
-  <div class="centered">
-    <h2 style="color:#B07B00;">
-      <img src="https://i.ibb.co/xqLwJ8bd/IMG-20250518-124828-459.webp" style="vertical-align:middle;width:28px;height:28px;"/> Stake
-    </h2>
-    <p style="font-size:15px;color:#B07B00;">Stake your IND.coin and earn rewards!</p>
-    <button class="tfun-btn" onclick="alert('Staking coming soon!')" style="margin-top:10px;">
-      <img src="https://img.icons8.com/ios-filled/50/FFD700/stack-of-coins.png" width="18" /> Stake Now
-    </button>
-    <div style="margin-top:15px;color:#B07B00;">
-      <strong>Staking feature soon.<br>Stay tuned!</strong>
-    </div>
-  </div>
-</div>
-<!-- More Tab Content - Fully Updated -->
+<!-- More Tab -->
 <div id="more" class="tab-content centered" style="display:none;">
-  <div style="background:#FFFBE6;margin:4px 0 14px 0;padding:14px;border-radius:10px;"></div>
-  <div style="padding:0;">
-    <div class="centered" style="margin-top:12px;background:#FFFBE6;box-shadow:none;">
-      <h2 style="font-size:19px;color:#B07B00;">
-        <img src="https://i.ibb.co/xqLwJ8bd/IMG-20250518-124828-459.webp" style="vertical-align:middle;width:28px;height:28px;"/> Level Income & Invite
-      </h2>
-      <div id="levelIncomeSection" style="margin:18px 0;"></div>
-    </div>
+  <div class="centered" style="margin-top:12px;background:#FFFBE6;box-shadow:none;">
     <div class="more-options">
-      <!-- Invite Friend Button -->
-      <button class="tfun-btn" id="inviteFriendBtn" style="margin-bottom:8px;background:#FFE066;color:#B07B00;">
-        <img src="https://img.icons8.com/ios-filled/50/FFD700/add-user-group-man-man.png" width="20" style="vertical-align:middle;"/> Invite Friend
-      </button>
-      <!-- Referral code input & Add Coin button -->
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
-        <div style="flex:1;">
-          <label for="referralCode" style="color:#B07B00;font-size:15px;font-weight:600;">Referral Code</label><br>
-          <input id="referralCode" type="text" placeholder="Enter referral code" style="width:100%;padding:8px 10px;border-radius:8px;border:1.6px solid #FFD700;background:#fff;color:#B07B00;font-size:15px;margin-top:4px;">
-        </div>
-        <button class="tfun-btn" id="addCoinBtn" style="margin-top:20px;background:#FFD700;color:#fff;font-size:15px;font-weight:700;padding:8px 18px;white-space:nowrap;">
-          <img src="https://img.icons8.com/ios-filled/50/FFD700/plus-math.png" width="18" style="vertical-align:middle;"/> Add Coin
-        </button>
-      </div>
-      <!-- Friend List will show here -->
-      <div id="myFriendsList" style="margin-top:13px;"></div>
-      <!-- My ID button --><a href="https://ibb.co/Q34n3zhp" target="_blank">
-  <img src="https://i.ibb.co/Q34n3zhp/IMG-20250622-034131-166.jpg" alt="IMG-20250622-034131-166" border="0" style="width:48px; height:48px; border-radius:50%; box-shadow:0 2px 8px #FFD70055; cursor:pointer;" />
-</a>
-      <button class="tfun-btn" onclick="navigator.clipboard.writeText(userId);alert('Your ID copied!')">
-        <img src="https://img.icons8.com/ios-filled/50/FFD700/id-verified.png" width="18" style="vertical-align:middle;"/> My ID
-        <span id="userId2" style="font-weight:600;margin-left:auto;">Loading...</span>
-      </button>
-      <button class="tfun-btn" id="languageBtn" onclick="openLanguageModal()">
-        <img src="https://img.icons8.com/ios-filled/50/FFD700/language.png" width="18" style="vertical-align:middle;"/> Language
-        <span id="activeLanguageIcon" style="margin-left:auto;">
-          <img src="https://flagcdn.com/us.svg" width="16" style="vertical-align:middle;"/> English
-        </span>
-      </button>
-      <button class="tfun-btn" onclick="openAIChatModal()">
-        <img src="https://img.icons8.com/ios-filled/50/FFD700/help.png" width="18" style="vertical-align:middle;"/>
-        Contact Support
-        <span style="display:inline-flex;align-items:center;gap:4px;margin-left:10px;font-size:13px;color:#FFA600;">
-          <img src="https://img.icons8.com/ios-filled/24/FFD700/artificial-intelligence.png" style="width:16px;height:16px;vertical-align:middle;" alt="AI"/>
-          IND.coin
-        </span>
-      </button>
-      <button class="tfun-btn" onclick="alert('Legal page will open.')">
-        <img src="https://img.icons8.com/ios-filled/50/FFD700/legal.png" width="18" style="vertical-align:middle;"/> Legal Information
-      </button>
+      <button class="tfun-btn" onclick="alert('Your ID copied!')"><img src="https://img.icons8.com/ios-filled/50/FFD700/id-verified.png" width="18"/> <span class="label-myid">My ID</span> <span id="userId2" style="font-weight:600;margin-left:auto;">Loading...</span></button>
+      <button class="tfun-btn" onclick="openInviteModal()"><img src="https://img.icons8.com/ios-filled/50/FFD700/add-user-group-man-man--v1.png" width="18" /> <span class="label-invite">Invite Friend</span></button>
+      <button class="tfun-btn" onclick="openFriendListModal()"><img src="https://img.icons8.com/ios-filled/50/FFD700/group-foreground-selected.png" width="18"/> Friend List</button>
+      <button class="tfun-btn" onclick="openLanguageModal()"><img src="https://img.icons8.com/ios-filled/50/FFD700/language.png" width="18"/> <span class="label-language">Language</span> <span id="activeLanguageIcon" style="margin-left:auto;"><img src="https://flagcdn.com/us.svg" width="16"/> English</span></button>
+      <button class="tfun-btn" onclick="openSupportModal()"><img src="https://img.icons8.com/ios-filled/50/FFD700/help.png" width="18"/> <span class="label-support">Support</span></button>
+      <button class="tfun-btn" onclick="openLegalModal()"><img src="https://img.icons8.com/ios-filled/50/FFD700/legal.png" width="18"/> <span class="label-legal">Legal Info</span></button>
     </div>
   </div>
 </div>
 <!-- Tab Bar -->
 <div class="tab-bar" style="display:none;">
   <button onclick="showTab('home')" class="tab-button active" id="btn-home">
-    <img src="https://i.ibb.co/xqLwJ8bd/IMG-20250518-124828-459.webp" alt="Home" class="bar-custom-icon"/>
-    <span>Home</span>
-  </button>
-  <button onclick="showTab('assets')" class="tab-button" id="btn-assets">
-    <img src="https://i.ibb.co/xqLwJ8bd/IMG-20250518-124828-459.webp" alt="Assets" class="bar-custom-icon"/>
-    <span>Assets</span>
-  </button>
-  <button onclick="showTab('stake')" class="tab-button" id="btn-stake">
-    <img src="https://i.ibb.co/xqLwJ8bd/IMG-20250518-124828-459.webp" alt="Stake" class="bar-custom-icon"/>
-    <span>Stake</span>
+    <img src="https://i.ibb.co/C38bkf7H/IMG-20250622-032411-164.webp" class="bar-custom-icon"/>
+    <span class="label-home">Home</span>
   </button>
   <button onclick="showTab('more')" class="tab-button" id="btn-more">
-    <img src="https://i.ibb.co/xqLwJ8bd/IMG-20250518-124828-459.webp" alt="More" class="bar-custom-icon"/>
-    <span>More</span>
-  </button>
-  <button onclick="showTab('mytab')" class="tab-button" id="btn-mytab">
-    <img src="https://i.ibb.co/xqLwJ8bd/IMG-20250518-124828-459.webp" alt="MY" class="bar-custom-icon"/>
-    <span>soon upgrade</span>
+    <img src="https://i.ibb.co/C38bkf7H/IMG-20250622-032411-164.webp" class="bar-custom-icon"/>
+    <span class="label-more">More</span>
   </button>
 </div>
 <!-- Footer -->
 <div class="ind-footer">
-  © Powered by <b>IND.coin</b>
-  <img src="https://i.ibb.co/xqLwJ8bd/IMG-20250518-124828-459.webp" class="footer-logo" alt="IND.COIN Logo">
+  <span class="label-powered">Powered by</span> <b>IND.coin</b>
+  <img src="https://i.ibb.co/C38bkf7H/IMG-20250622-032411-164.webp" class="footer-logo" alt="IND.COIN Logo">
+</div>
+<!-- Support Modal -->
+<div id="supportModal">
+  <div>
+    <div style="padding:18px 14px 12px 14px;border-bottom:1.5px solid #FFD700;">
+      <b style="font-size:1.15em;color:#B07B00;" class="label-contact-support">Contact Support</b>
+      <button onclick="closeSupportModal()" style="float:right;background:transparent;border:none;font-size:23px;cursor:pointer;color:#FFD700;">&times;</button>
+    </div>
+    <div id="chatArea" style="padding:14px 12px;min-height:120px;max-height:220px;overflow:auto;display:flex;flex-direction:column;gap:8px;font-size:15px;"></div>
+    <div style="padding:12px;border-top:1.5px solid #FFD700;display:flex;gap:6px;">
+      <input id="supportInput" type="text" placeholder="Type your IND.Coin issue..." style="flex:1;padding:7px 10px;border-radius:7px;border:1.5px solid #FFD700;font-size:15px;" onkeydown="if(event.key==='Enter'){sendSupportMessage();}">
+      <button onclick="sendSupportMessage()" style="background:#FFD700;color:#fff;padding:7px 18px;border-radius:7px;border:none;font-size:15px;font-weight:700;cursor:pointer;" class="label-send">Send</button>
+    </div>
+  </div>
+</div>
+<!-- Legal Modal -->
+<div id="legalModal">
+  <div>
+    <div style="padding:18px 14px 12px 14px;border-bottom:1.5px solid #FFD700;">
+      <b style="font-size:1.15em;color:#B07B00;" class="label-legal-info">Legal Info</b>
+      <button onclick="closeLegalModal()" style="float:right;background:transparent;border:none;font-size:23px;cursor:pointer;color:#FFD700;">&times;</button>
+    </div>
+    <div style="padding:24px 22px 20px 22px; display:flex; flex-direction:column; gap:22px; align-items:center;">
+      <button style="width:100%;background:linear-gradient(90deg,#FFD700 60%,#FFA600 100%);color:#B07B00;font-size:17px;font-weight:700;padding:13px 12px;border-radius:10px;border:2px solid #FFD700;cursor:pointer;" onclick="window.open('https://t.me/+_J-uxL38oSo3NDI1','_blank')">Channel 1 (Chanchal 1)</button>
+      <button style="width:100%;background:linear-gradient(90deg,#FFE066 60%,#FFD700 100%);color:#B07B00;font-size:17px;font-weight:700;padding:13px 12px;border-radius:10px;border:2px solid #FFD700;cursor:pointer;" onclick="window.open('https://t.me/+Lki3cyjdtb9kNDNl','_blank')">Chanchal 2</button>
+    </div>
+  </div>
+</div>
+<!-- Language Modal -->
+<div id="languageModal">
+  <div>
+    <div style="padding:18px 14px 12px 14px;border-bottom:1.5px solid #FFD700;">
+      <b style="font-size:1.15em;color:#B07B00;" class="label-select-language">Select Language</b>
+      <button onclick="closeLanguageModal()" style="float:right;background:transparent;border:none;font-size:23px;cursor:pointer;color:#FFD700;">&times;</button>
+    </div>
+    <div class="lang-list" id="langList"></div>
+  </div>
+</div>
+<!-- Friend List Modal -->
+<div id="friendListModal">
+  <div>
+    <div style="padding:18px 14px 12px 14px;border-bottom:1.5px solid #FFD700;">
+      <b style="font-size:1.15em;color:#B07B00;">My Friend List</b>
+      <button onclick="closeFriendListModal()" style="float:right;background:transparent;border:none;font-size:23px;cursor:pointer;color:#FFD700;">&times;</button>
+    </div>
+    <div id="friendListArea" style="padding:20px 12px;min-height:100px;max-height:220px;overflow:auto;font-size:15px;text-align:left;"></div>
+  </div>
 </div>
 <script>
-/* ---------- GAME LOGIC STARTS ---------- */
+const LANGUAGES = [
+  {code:"en", name:"English",   flag:"us.svg"},
+  {code:"hi", name:"हिन्दी",     flag:"in.svg"},
+  {code:"es", name:"Español",   flag:"es.svg"},
+  {code:"fr", name:"Français",  flag:"fr.svg"},
+  {code:"de", name:"Deutsch",   flag:"de.svg"},
+  {code:"zh", name:"中文",       flag:"cn.svg"},
+  {code:"ar", name:"العربية",   flag:"sa.svg"},
+  {code:"ru", name:"Русский",   flag:"ru.svg"},
+  {code:"ja", name:"日本語",    flag:"jp.svg"},
+  {code:"tr", name:"Türkçe",    flag:"tr.svg"},
+  {code:"pt", name:"Português", flag:"pt.svg"},
+  {code:"bn", name:"বাংলা",     flag:"bd.svg"},
+  {code:"id", name:"Bahasa Indonesia", flag:"id.svg"},
+  {code:"ko", name:"한국어",    flag:"kr.svg"},
+  {code:"vi", name:"Tiếng Việt", flag:"vn.svg"},
+  {code:"fa", name:"فارسی",      flag:"ir.svg"},
+];
+const TRANSLATIONS = {
+  en: {
+    home: "Home", more: "More", powered: "Powered by", claim: "Claim", boost: "Boost", language: "Language",
+    invite: "Invite Friend", myid: "My ID", support: "Support", legal: "Legal Info", selectLanguage: "Select Language",
+    hashrate: "Hashrate", userid: "Your user ID", contactSupport: "Contact Support", legalInfo: "Legal Info",
+    send: "Send"
+  },
+  hi: { home:"मुख्य", more:"अधिक", powered:"द्वारा संचालित", claim:"क्लेम करें", boost:"बूस्ट", language:"भाषा", invite:"मित्र आमंत्रित करें", myid:"मेरी आईडी", support:"सहायता", legal:"कानूनी जानकारी", selectLanguage:"भाषा चुनें", hashrate:"हैशरेट", userid:"आपकी यूज़र आईडी", contactSupport:"संपर्क सहायता", legalInfo:"कानूनी जानकारी", send:"भेजें" },
+  es: { home:"Inicio", more:"Más", powered:"Desarrollado por", claim:"Reclamar", boost:"Impulsar", language:"Idioma", invite:"Invitar amigo", myid:"Mi ID", support:"Soporte", legal:"Información legal", selectLanguage:"Seleccionar idioma", hashrate:"Potencia", userid:"Tu ID de usuario", contactSupport:"Contactar soporte", legalInfo:"Información legal", send:"Enviar" },
+  fr: { home:"Accueil", more:"Plus", powered:"Propulsé par", claim:"Réclamer", boost:"Booster", language:"Langue", invite:"Inviter un ami", myid:"Mon ID", support:"Support", legal:"Infos légales", selectLanguage:"Choisir la langue", hashrate:"Taux de hachage", userid:"Votre ID utilisateur", contactSupport:"Contacter le support", legalInfo:"Infos légales", send:"Envoyer" },
+  de: { home:"Start", more:"Mehr", powered:"Angetrieben von", claim:"Beanspruchen", boost:"Boost", language:"Sprache", invite:"Freund einladen", myid:"Meine ID", support:"Support", legal:"Rechtliches", selectLanguage:"Sprache wählen", hashrate:"Hashrate", userid:"Ihre Benutzer-ID", contactSupport:"Support kontaktieren", legalInfo:"Rechtliches", send:"Senden" }
+};
+function getLangObj(code) {
+  return TRANSLATIONS[code] || TRANSLATIONS['en'];
+}
+function updateUILanguage(lang) {
+  const t = getLangObj(lang);
+  document.querySelector('.label-home').textContent = t.home;
+  document.querySelector('.label-more').textContent = t.more;
+  document.querySelector('.label-powered').textContent = t.powered;
+  document.querySelector('.label-claim').textContent = t.claim;
+  document.querySelector('.label-boost').textContent = t.boost;
+  document.querySelector('.label-language').textContent = t.language;
+  document.querySelector('.label-invite').textContent = t.invite;
+  document.querySelector('.label-myid').textContent = t.myid;
+  document.querySelector('.label-support').textContent = t.support;
+  document.querySelector('.label-legal').textContent = t.legal;
+  document.querySelector('.label-select-language').textContent = t.selectLanguage;
+  document.querySelector('.label-hashrate').textContent = t.hashrate;
+  document.querySelector('.label-userid').textContent = t.userid;
+  document.querySelector('.label-contact-support').textContent = t.contactSupport;
+  document.querySelector('.label-legal-info').textContent = t.legalInfo;
+  document.querySelector('.label-send').textContent = t.send;
+  const activeLang = LANGUAGES.find(l => l.code === lang) || LANGUAGES[0];
+  document.getElementById('activeLanguageIcon').innerHTML = `<img src="https://flagcdn.com/${activeLang.flag}" width="16"/> ${activeLang.name}`;
+}
+function openLanguageModal() {
+  const modal = document.getElementById("languageModal");
+  const langList = document.getElementById("langList");
+  langList.innerHTML = "";
+  const currentLang = localStorage.getItem("gameLang") || "en";
+  LANGUAGES.forEach(lang => {
+    const div = document.createElement("div");
+    div.className = "lang-item" + (lang.code === currentLang ? " selected" : "");
+    div.onclick = () => selectLanguage(lang.code);
+    div.innerHTML = `<img class="lang-flag" src="https://flagcdn.com/${lang.flag}"/> ${lang.name}`;
+    langList.appendChild(div);
+  });
+  modal.style.display = "flex";
+}
+function closeLanguageModal() { document.getElementById("languageModal").style.display = "none"; }
+function selectLanguage(code) {
+  localStorage.setItem("gameLang", code);
+  updateUILanguage(code);
+  closeLanguageModal();
+}
+
+// --- Main Game Logic ---
 let userId = localStorage.getItem("userId");
 if (!userId) { userId = Math.floor(Math.random() * 1e10).toString(); localStorage.setItem("userId", userId); }
 let walletBalance = parseFloat(localStorage.getItem("walletBalance")) || 0;
 let miningBalance = parseFloat(localStorage.getItem("miningBalance")) || 0;
-let usdtBalance = parseFloat(localStorage.getItem("usdtBalance")) || 0;
 let hashrate = parseInt(localStorage.getItem("hashrate")) || 2;
 const miningRate = 0.00000009110;
-const EXCHANGE_RATE = 100000;
 
-/* --- Language --- */
-const allLanguages = [
-  { code: 'en', label: 'English', flag: 'https://flagcdn.com/us.svg' },
-  { code: 'hi', label: 'हिन्दी', flag: 'https://flagcdn.com/in.svg' },
-  { code: 'es', label: 'Español', flag: 'https://flagcdn.com/es.svg' },
-  { code: 'fr', label: 'Français', flag: 'https://flagcdn.com/fr.svg' },
-  { code: 'ru', label: 'Русский', flag: 'https://flagcdn.com/ru.svg' },
-  { code: 'zh', label: '中文', flag: 'https://flagcdn.com/cn.svg' },
-  { code: 'ar', label: 'العربية', flag: 'https://flagcdn.com/sa.svg' },
-  { code: 'pt', label: 'Português', flag: 'https://flagcdn.com/pt.svg' },
-  { code: 'de', label: 'Deutsch', flag: 'https://flagcdn.com/de.svg' },
-  { code: 'bn', label: 'বাংলা', flag: 'https://flagcdn.com/bd.svg' },
-];
-function getActiveLanguage() { return localStorage.getItem('indcoinLang') || 'en'; }
-function setActiveLanguage(langCode) { localStorage.setItem('indcoinLang', langCode); updateLanguageButton(); }
-function updateLanguageButton() {
-  const langCode = getActiveLanguage();
-  const lang = allLanguages.find(l => l.code === langCode) || allLanguages[0];
-  document.getElementById('activeLanguageIcon').innerHTML = `<img src="${lang.flag}" width="16" style="vertical-align:middle;"/> ${lang.label}`;
+// --- Referral/Invite logic ---
+function getUrlParam(name) {
+  const match = window.location.search.match(new RegExp('[?&]' + name + '=([^&]+)'));
+  return match ? decodeURIComponent(match[1]) : null;
 }
-function openLanguageModal() {
-  if (document.getElementById('languageModal')) return;
-  let modal = document.createElement('div');
-  modal.id = 'languageModal';
-  modal.style.cssText = 'position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.2);display:flex;align-items:center;justify-content:center;z-index:99999;';
-  let langList = allLanguages.map(lang => `
-    <button style="display:flex;align-items:center;gap:10px;width:100%;padding:10px 0;border-radius:7px;border:none;background:#fffbe6;margin:5px 0;font-size:16px;cursor:pointer;font-weight:600;outline:none;box-shadow:0 1px 8px #FFD70022;"
-      onclick="setActiveLanguage('${lang.code}');document.body.removeChild(document.getElementById('languageModal'));">
-      <img src="${lang.flag}" width="24" style="border-radius:5px;box-shadow:0 1px 4px #FFD70011;"> 
-      ${lang.label}
-      ${getActiveLanguage() === lang.code ? '<span style=\'margin-left:auto;color:#FFD700;font-size:18px;\'>✓</span>' : ''}
-    </button>
-  `).join('');
-  modal.innerHTML = `
-    <div style="background:#fffbe6;padding:30px 24px 20px 24px;min-width:320px;border-radius:14px;box-shadow:0 4px 24px #FFD70044;max-width:94vw;">
-      <h3 style="margin-top:0;color:#B07B00;font-size:1.15em;">Select Language</h3>
-      <div style="display:flex;flex-direction:column;gap:3px;">${langList}</div>
-      <button onclick="document.body.removeChild(document.getElementById('languageModal'))"
-        style="background:#FFD700;color:#fff;padding:10px 22px;border-radius:8px;border:none;font-size:15px;font-weight:700;margin-top:14px;cursor:pointer;width:100%;">Close</button>
-    </div>
-  `;
-  document.body.appendChild(modal);
-}
-document.addEventListener("DOMContentLoaded", updateLanguageButton);
-
-function updateClaimButton() {
-  const claimBtn = document.getElementById("claimBtn");
-  if (claimBtn) {
-    claimBtn.disabled = miningBalance <= 0;
+function handleReferralOnFirstVisit() {
+  if (!localStorage.getItem("refHandled")) {
+    const ref = getUrlParam("start");
+    if (ref && ref !== userId) {
+      localStorage.setItem("referrer", ref);
+      let friends = JSON.parse(localStorage.getItem("friends_" + ref) || "[]");
+      if (!friends.includes(userId)) {
+        friends.push(userId);
+        localStorage.setItem("friends_" + ref, JSON.stringify(friends));
+      }
+      walletBalance += 100;
+      localStorage.setItem("walletBalance", walletBalance.toString());
+      document.getElementById("invite-success-msg").textContent = "Welcome Bonus Received! (100 IND.coin)";
+      let inviterBalance = parseFloat(localStorage.getItem("walletBalance_" + ref)) || 0;
+      inviterBalance += 5000;
+      localStorage.setItem("walletBalance_" + ref, inviterBalance.toString());
+      localStorage.setItem("refHandled", "yes");
+    }
   }
 }
+handleReferralOnFirstVisit();
+
 function updateMiningDisplay() {
-  let bal = parseFloat(localStorage.getItem("walletBalance") || "0");
-  let extraBal = parseFloat(localStorage.getItem("walletBalance_" + userId) || "0");
-  if(document.getElementById('balance-card'))
-    document.getElementById('balance-card').innerHTML = `Balance: <strong>${(bal+extraBal).toFixed(6)} IND.COIN</strong>`;
-  if(document.getElementById('usdt-balance')) document.getElementById('usdt-balance').innerText = usdtBalance.toFixed(2);
+  if(document.getElementById('balance-card')) document.getElementById('balance-card').innerHTML = `Balance: <strong>${walletBalance.toFixed(6)} IND.COIN</strong>`;
   if(document.getElementById('live-balance')) document.getElementById('live-balance').innerText = `${miningBalance.toFixed(9)} IND.coin`;
   if(document.getElementById('hashrate-display')) document.getElementById('hashrate-display').innerText = hashrate;
   if(document.getElementById("userId")) document.getElementById("userId").innerText = userId;
   if(document.getElementById("userId2")) document.getElementById("userId2").innerText = userId;
-  if(document.getElementById('wallet-balance-card'))
-    document.getElementById('wallet-balance-card').innerHTML = `Assets Balance: <strong>${(bal+extraBal).toFixed(6)} IND.COIN</strong>`;
-  updateClaimButton && updateClaimButton();
+  if(document.getElementById('wallet-balance-card')) document.getElementById('wallet-balance-card').innerHTML = `Assets Balance: <strong>${walletBalance.toFixed(6)} IND.COIN</strong>`;
 }
-function mineCoins(elapsedSeconds) {
-  miningBalance += elapsedSeconds * hashrate * miningRate;
+function mineCoins() {
+  miningBalance += hashrate * miningRate;
   localStorage.setItem("miningBalance", miningBalance.toString());
   updateMiningDisplay();
 }
 function startAutoMining() {
-  const lastTime = parseFloat(localStorage.getItem("lastMiningTime")) || Date.now();
-  const now = Date.now();
-  const elapsed = Math.floor((now - lastTime) / 1000);
-  if (elapsed > 0) mineCoins(elapsed);
-  setInterval(() => {
-    mineCoins(1);
-    localStorage.setItem("lastMiningTime", Date.now().toString());
-  }, 1000);
+  setInterval(mineCoins, 1000);
 }
 function startApp() {
   document.getElementById("splash-screen").style.display = "none";
@@ -330,7 +301,27 @@ function startApp() {
   updateMiningDisplay();
   startAutoMining();
 }
-document.getElementById("startGameBtn").onclick = startApp;
+document.getElementById("startGameBtn").onclick = function() {
+  var photo = document.getElementById("splashPhoto");
+  photo.classList.add("rotate");
+  this.disabled = true;
+  this.style.opacity = 0.5;
+  setTimeout(function() {
+    photo.classList.remove("rotate");
+    startApp();
+  }, 5000);
+};
+// FAN SPIN LOGIC (ONLY IMAGE FAST, GH/S NORMAL)
+const fanImage = document.getElementById("fanImage");
+let fanTimeout = null;
+fanImage.addEventListener("click", function() {
+  fanImage.classList.add("fast-spin");
+  if (fanTimeout) clearTimeout(fanTimeout);
+  fanTimeout = setTimeout(function() {
+    fanImage.classList.remove("fast-spin");
+  }, 6000); // 6 seconds
+});
+
 function showTab(tabId) {
   document.querySelectorAll(".tab-content").forEach(tab => tab.style.display = "none");
   document.getElementById(tabId).style.display = "block";
@@ -342,12 +333,6 @@ function showTab(tabId) {
 function claimCoins() {
   if (miningBalance > 0) {
     walletBalance += miningBalance;
-    let addedUSDT = Math.floor(walletBalance / EXCHANGE_RATE);
-    if (addedUSDT > 0) {
-      usdtBalance += addedUSDT;
-      walletBalance -= addedUSDT * EXCHANGE_RATE;
-      localStorage.setItem("usdtBalance", usdtBalance.toString());
-    }
     miningBalance = 0;
     localStorage.setItem("walletBalance", walletBalance.toString());
     localStorage.setItem("miningBalance", miningBalance.toString());
@@ -357,341 +342,93 @@ function claimCoins() {
     alert("No IND.coin available to claim.");
   }
 }
-function boostHashrate() {
-  hashrate += 1;
-  localStorage.setItem("hashrate", hashrate.toString());
-  updateMiningDisplay();
-  alert("Hashrate Boosted! Now: "+hashrate+" GH/s");
-}
-function giveSocialBonus(platform, e) {
-  const bonusKey = `socialBonus_${platform}_${userId}`;
-  if (!localStorage.getItem(bonusKey)) {
-    walletBalance += 1000;
-    localStorage.setItem("walletBalance", walletBalance.toString());
-    localStorage.setItem(bonusKey, "1");
-    updateMiningDisplay();
-    alert(`1000 IND.coin bonus for following on ${platform.charAt(0).toUpperCase() + platform.slice(1)}!`);
-  }
-}
-function openDepositModal() {
-  if (document.getElementById('depositModal')) return;
-  const addresses = {
-    bep20:   { name: 'BNB Smart Chain (BEP20)', addr: '0x90ccfdd242959980787c305c6a72e1763e88405a' },
-    trc20:   { name: 'Tron (TRC20)', addr: 'TJudxfSCQ88JEEzAYx6uSpfnYJs1GWYRk8' },
-    aptos:   { name: 'Aptos', addr: '0x76cdf4083041d71a1dc7c74b03fd906bf6234d2d5b7e342d743359cb3dc95c0f' },
-    polygon: { name: 'Polygon POS', addr: '0x90ccfdd242959980787c305c6a72e1763e88405a' },
-    erc20:   { name: 'Ethereum (ERC20)', addr: '0x90ccfdd242959980787c305c6a72e1763e88405a' },
-    solana:  { name: 'Solana', addr: 'C5bBp6mC8Rk7mJAT8S6ZzNFnh6WFP2Uefgpjb385ybXG' },
-    opbnb:   { name: 'opBNB', addr: '0x90ccfdd242959980787c305c6a72e1763e88405a' }
-  };
+function boostHashrate() { alert('soon'); }
+function toggleExchangeMenu() { alert('Exchange feature coming soon!'); }
+function openDepositModal() { alert('Deposit feature coming soon!'); }
+// ---------- Invite Modal ----------
+function openInviteModal() {
+  if (document.getElementById('inviteModal')) return;
+  let inviteLink = `https://t.me/Unique_IND_coin_bot?start=${userId}`;
   let modal = document.createElement('div');
-  modal.id = 'depositModal';
-  modal.style.cssText = 'position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;z-index:99999;';
-  let netList = Object.entries(addresses).map(([key, net]) => `<option value="${key}">${net.name}</option>`).join('');
-  modal.innerHTML = `
-    <div style="background:#fffbe6;padding:32px 24px 22px 24px;min-width:320px;border-radius:14px;box-shadow:0 4px 24px #FFD70033;max-width:94vw;text-align:center;position:relative;">
-      <h3 style="margin-top:0;color:#B07B00;font-size:1.18em;">Deposit Wallet Address</h3>
-      <select id="depositNetwork" style="width:100%;padding:10px;border-radius:8px;border:1.8px solid #FFD700;font-size:16px;margin-bottom:16px;color:#B07B00;">
-        <option value="">Select Network</option>
-        ${netList}
-      </select>
-      <div id="walletAddressWrap"></div>
-      <button onclick="closeDepositModal()" style="background:#FFE066;color:#B07B00;padding:9px 20px;border-radius:8px;border:none;font-size:15px;font-weight:700;margin-top:20px;cursor:pointer;">
-        Close
-      </button>
-      <div id="depositQRWrap" style="display:none;position:fixed;z-index:100001;left:0;top:0;width:100vw;height:100vh;justify-content:center;align-items:center;background:rgba(0,0,0,0.6);"></div>
-    </div>
-  `;
-  document.body.appendChild(modal);
-
-  document.getElementById('depositNetwork').onchange = function() {
-    let val = this.value;
-    let wrap = document.getElementById('walletAddressWrap');
-    if (!val || !addresses[val]) { wrap.innerHTML = ""; return; }
-    let addr = addresses[val].addr;
-    wrap.innerHTML = `
-      <div style="margin-bottom:10px;">
-        <span style="font-weight:bold;color:#B07B00;">${addresses[val].name}:</span>
-      </div>
-      <div style="display:flex;align-items:center;justify-content:center;gap:8px;">
-        <input style="font-size:15px;padding:8px 14px;border-radius:8px;border:1.6px solid #FFD700;background:#fff;width:85%;color:#B07B00;" value="${addr}" readonly>
-        <button onclick="showDepositQR('${addr}')" style="background:#FFD700;padding:8px 11px;border-radius:7px;border:none;cursor:pointer;">
-          <img src="https://img.icons8.com/ios-filled/24/ffffff/qr-code.png" style="width:22px;height:22px;" alt="qr">
-        </button>
-      </div>
-    `;
-  };
-}
-function closeDepositModal() {
-  let modal = document.getElementById('depositModal');
-  if (modal) document.body.removeChild(modal);
-}
-function showDepositQR(address) {
-  let wrap = document.getElementById('depositQRWrap');
-  if (!wrap) return;
-  wrap.style.display = "flex";
-  wrap.innerHTML = `
-    <div style="background:#fffbe6;padding:30px 30px 20px 30px;border-radius:18px;box-shadow:0 4px 22px #FFD70055;text-align:center;position:relative;">
-      <div style="font-size:16px;color:#B07B00;margin-bottom:15px;">Scan QR Code</div>
-      <div id="qrcode"></div>
-      <div style="font-size:14px;margin:11px 0 0 0;word-break:break-all;color:#B07B00;">${address}</div>
-      <button onclick="this.closest('#depositQRWrap').style.display='none'" style="background:#FFD700;color:#fff;padding:7px 20px;border-radius:8px;border:none;font-size:15px;font-weight:700;margin-top:18px;cursor:pointer;display:inline-block;">Close</button>
-    </div>
-  `;
-  let qr = encodeURIComponent(address);
-  document.getElementById('qrcode').innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${qr}" style="width:150px;height:150px;" alt="QR">`;
-}
-function toggleExchangeMenu() {
-  const exchangeOptions = document.getElementById("exchangeOptions");
-  exchangeOptions.style.display = exchangeOptions.style.display === "none" ? "flex" : "none";
-}
-function createExchangeModal(type) {
-  let modal = document.createElement("div");
-  modal.id = "exchangeModal";
-  modal.style.position = "fixed";
-  modal.style.top = "0";
-  modal.style.left = "0";
-  modal.style.width = "100vw";
-  modal.style.height = "100vh";
-  modal.style.background = "rgba(0,0,0,0.35)";
-  modal.style.display = "flex";
-  modal.style.alignItems = "center";
-  modal.style.justifyContent = "center";
-  modal.style.zIndex = "9999";
-
-  let labelFrom = type === "usdt2ind" ? "USDT" : "IND.COIN";
-  let labelTo = type === "usdt2ind" ? "IND.COIN" : "USDT";
-  let balance = type === "usdt2ind" ? usdtBalance : walletBalance;
-  let rateStr = type === "usdt2ind"
-    ? `1 USDT = ${EXCHANGE_RATE} IND.coin`
-    : `1 IND.coin = ${(1/EXCHANGE_RATE).toFixed(8)} USDT`;
-
-  modal.innerHTML = `
-    <div style="background:#fffbe6;padding:28px 22px 22px 22px;min-width:320px;border-radius:14px;box-shadow:0 4px 24px #FFD70033;max-width:94vw;">
-      <h3 style="margin-top:0;color:#B07B00;font-size:1.2em;">Convert ${labelFrom} → ${labelTo}</h3>
-      <div style="margin-bottom:7px;font-size:14px;color:#B07B00;">Exchange Rate: <b>${rateStr}</b></div>
-      <div style="margin-bottom:7px;font-size:14px;color:#B07B00;">Your ${labelFrom} Balance: <b>${balance.toFixed(6)}</b></div>
-      <div style="display:flex;gap:6px;align-items:center;">
-        <input type="number" min="0" step="any" id="exchangeInput" placeholder="Enter amount" style="flex:1;padding:10px;border-radius:7px;border:1.8px solid #FFD700;font-size:15px;margin-bottom:12px;background:#fff;color:#B07B00;">
-        <button id="maxBtn" style="background:#FFD700;color:#fff;font-size:13px;border:none;border-radius:6px;padding:8px 15px;cursor:pointer;margin-bottom:12px;">MAX</button>
-      </div>
-      <div id="exchangeResult" style="color:#B07B00;font-size:14px;margin-bottom:12px;"></div>
-      <button id="confirmExchangeBtn" style="background:#FFD700;color:#fff;padding:10px 22px;border-radius:8px;border:none;font-size:15px;font-weight:700;margin-right:7px;cursor:pointer;">
-        Convert
-      </button>
-      <button onclick="document.body.removeChild(document.getElementById('exchangeModal'))" style="background:#FFE066;color:#B07B00;padding:10px 22px;border-radius:8px;border:none;font-size:15px;font-weight:700;cursor:pointer;">
-        Cancel
-      </button>
-    </div>
-  `;
-  document.body.appendChild(modal);
-
-  document.getElementById("maxBtn").onclick = function() {
-    document.getElementById("exchangeInput").value = balance;
-    document.getElementById("exchangeInput").dispatchEvent(new Event('input'));
-  };
-  document.getElementById("exchangeInput").oninput = function() {
-    let val = parseFloat(this.value) || 0;
-    let result;
-    if(type === "usdt2ind") {
-      result = val * EXCHANGE_RATE;
-      document.getElementById("exchangeResult").innerText = `${val} USDT → ${result} IND.coin`;
-    } else {
-      result = val / EXCHANGE_RATE;
-      document.getElementById("exchangeResult").innerText = `${val} IND.coin → ${result.toFixed(8)} USDT`;
-    }
-  };
-  document.getElementById("confirmExchangeBtn").onclick = function() {
-    let amount = parseFloat(document.getElementById("exchangeInput").value) || 0;
-    if(amount <= 0) { alert("Enter a valid amount."); return; }
-    if(type === "usdt2ind") {
-      if(amount > usdtBalance) { alert("Insufficient USDT balance."); return; }
-      let indAmount = amount * EXCHANGE_RATE;
-      usdtBalance -= amount;
-      walletBalance += indAmount;
-      localStorage.setItem("usdtBalance", usdtBalance.toString());
-      localStorage.setItem("walletBalance", walletBalance.toString());
-      updateMiningDisplay();
-      alert(`Converted ${amount} USDT → ${indAmount} IND.coin`);
-    } else {
-      if(amount > walletBalance) { alert("Insufficient IND.COIN balance."); return; }
-      let usdtAmount = amount / EXCHANGE_RATE;
-      walletBalance -= amount;
-      usdtBalance += usdtAmount;
-      localStorage.setItem("usdtBalance", usdtBalance.toString());
-      localStorage.setItem("walletBalance", walletBalance.toString());
-      updateMiningDisplay();
-      alert(`Converted ${amount} IND.coin → ${usdtAmount.toFixed(8)} USDT`);
-    }
-    document.body.removeChild(document.getElementById('exchangeModal'));
-  };
-}
-document.addEventListener("DOMContentLoaded", function() {
-  document.getElementById("usdt2indBtn").onclick = function() {
-    createExchangeModal("usdt2ind");
-  };
-  document.getElementById("ind2usdtBtn").onclick = function() {
-    createExchangeModal("ind2usdt");
-  };
-});
-
-/* --- Level Income/Referral Logic --- */
-const levelThresholds = [
-  { level: 1, invites: 10, bonus: 5000, label: "1st Level" },
-  { level: 2, invites: 25, bonus: 2000, label: "2nd Level" },
-  { level: 3, invites: 50, bonus: 1000, label: "3rd Level" }
-];
-function getMyFriends(uid) {
-  try { return JSON.parse(localStorage.getItem("myFriends_" + uid) || "[]"); } catch (e) { return []; }
-}
-function addMyFriend(uid, friendId) {
-  let arr = getMyFriends(uid);
-  if (!arr.includes(friendId)) {
-    arr.push(friendId);
-    localStorage.setItem("myFriends_" + uid, JSON.stringify(arr));
-  }
-}
-function showMyFriendsList() {
-  const listDiv = document.getElementById("myFriendsList");
-  if (!listDiv) return;
-  let arr = getMyFriends(userId);
-  if (arr.length === 0) {
-    listDiv.innerHTML = "<span style='color:#B07B00;font-size:15px;'>No friends invited yet.</span>";
-  } else {
-    listDiv.innerHTML = `<b style='color:#B07B00;'>Invited Friends:</b><ul style='text-align:left;color:#B07B00;font-size:14px;margin-top:7px;'>` +
-      arr.map(fid => `<li>User ID: <b>${fid}</b></li>`).join('') + "</ul>";
-  }
-}
-function showLevelIncomeStatus() {
-  const section = document.getElementById("levelIncomeSection");
-  if (!section) return;
-  const myFriends = getMyFriends(userId);
-  let html = `<h3 style="color:#B07B00;font-size:16px;margin-bottom:8px;">Level Income Progress</h3>`;
-  html += `<div style="margin-bottom:8px;font-size:15px;color:#B07B00;">Invited Friends: <b>${myFriends.length}</b></div>`;
-  levelThresholds.forEach(t => {
-    const unlocked = myFriends.length >= t.invites;
-    html += `<div style="margin-bottom:6px;display:flex;align-items:center;gap:7px;">
-      <img src="https://img.icons8.com/ios-filled/50/FFD700/medal2--v2.png" width="20"/>
-      <span style="font-weight:600;color:${unlocked?'#FFD700':'#B07B00'};">${t.label} (${t.invites} friends):</span>
-      <span style="margin-left:10px;color:${unlocked?'#00a600':'#B07B00'};">
-        ${unlocked ? `Unlocked! <b style='color:#007900;'>(+${t.bonus} IND.coin)</b>` : `Invite ${t.invites - myFriends.length} more`}
-      </span>
-    </div>`;
-  });
-  html += `<div style="margin-top:13px;font-size:15px;color:#B07B00;">
-    <b style="color:#FFD700;">More friends = more levels unlocked = more rewards!</b>
-  </div>`;
-  section.innerHTML = html;
-}
-document.addEventListener("DOMContentLoaded", function() {
-  const addCoinBtn = document.getElementById('addCoinBtn');
-  if (addCoinBtn) {
-    addCoinBtn.onclick = function() {
-      const codeInput = document.getElementById('referralCode');
-      const code = codeInput.value.trim();
-      if (!code) { alert("Please enter a referral code."); return; }
-      const refKey = "usedReferral_" + code + "_" + userId;
-      if (localStorage.getItem(refKey)) { alert("Referral code already used."); return; }
-      if (code === userId) { alert("You cannot use your own referral code."); return; }
-      addMyFriend(code, userId);
-      walletBalance += 1000;
-      localStorage.setItem("walletBalance", walletBalance.toString());
-      localStorage.setItem(refKey, "1");
-      function checkAndAwardLevelBonus(refUid) {
-        if (!refUid) return;
-        let friends = getMyFriends(refUid);
-        levelThresholds.forEach(t => {
-          const bonusKey = `levelBonus_${refUid}_l${t.level}`;
-          if (friends.length === t.invites && !localStorage.getItem(bonusKey)) {
-            let wb = parseFloat(localStorage.getItem("walletBalance_" + refUid) || "0");
-            wb += t.bonus;
-            localStorage.setItem("walletBalance_" + refUid, wb.toString());
-            localStorage.setItem(bonusKey, "1");
-          }
-        });
-      }
-      checkAndAwardLevelBonus(code);
-      localStorage.setItem("referrerId_" + userId, code);
-      updateMiningDisplay && updateMiningDisplay();
-      showMyFriendsList && showMyFriendsList();
-      showLevelIncomeStatus && showLevelIncomeStatus();
-      alert("Referral code applied! 1000 IND.coin added.");
-      codeInput.value = "";
-    };
-  }
-  showMyFriendsList();
-  showLevelIncomeStatus();
-});
-document.addEventListener("DOMContentLoaded", function() {
-  const inviteBtn = document.getElementById('inviteFriendBtn');
-  if (inviteBtn) {
-    inviteBtn.onclick = function() {
-      const referralLink = `${window.location.origin}${window.location.pathname}?ref=${userId}`;
-      alert("Your referral code: " + userId + "\nReferral link copied!\n" + referralLink);
-      if (navigator.clipboard) navigator.clipboard.writeText(referralLink);
-      showMyFriendsList();
-    };
-  }
-  if (document.getElementById("userId2")) document.getElementById("userId2").innerText = userId;
-});
-
-/* ----------- AI Chat Support Modal ------------- */
-function openAIChatModal() {
-  if (document.getElementById('aiChatModal')) return;
-  let modal = document.createElement('div');
-  modal.id = 'aiChatModal';
+  modal.id = 'inviteModal';
   modal.style.cssText = 'position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;z-index:999999;';
   modal.innerHTML = `
-    <div style="background:#fffbe6;padding:0 0 15px 0;min-width:320px;border-radius:15px;box-shadow:0 4px 24px #FFD70044;max-width:98vw;display:flex;flex-direction:column;width:370px;">
-      <div style="background:#FFD700;padding:15px 15px 13px 15px;border-radius:15px 15px 0 0;display:flex;align-items:center;gap:9px;">
-        <img src="https://img.icons8.com/ios-filled/50/FFD700/artificial-intelligence.png" width="26"/>
-        <span style="font-weight:700;font-size:1.09em;color:#fff;">IND.coin Support</span>
-        <button onclick="document.body.removeChild(document.getElementById('aiChatModal'))" style="margin-left:auto;background:none;border:none;font-size:1.6em;color:#fff;cursor:pointer;">&times;</button>
+    <div style="background:#fffbe6;padding:26px 22px 18px 22px;min-width:320px;border-radius:14px;box-shadow:0 4px 24px #FFD70044;max-width:94vw;">
+      <h2 style="color:#B07B00;font-size:1.17em;margin-top:0;">
+        <img src="https://img.icons8.com/ios-filled/50/FFD700/add-user-group-man-man--v1.png" width="24" style="vertical-align:middle;"/> Invite Friends
+      </h2>
+      <div style="margin-bottom:16px;font-size:15px;">
+        <b>Your Invite Link:</b>
+        <span style="background:#FFD70022;padding:6px 13px;border-radius:8px;font-size:15px;color:#B07B00;display:inline-block;word-break:break-all;margin-left:0;">${inviteLink}</span>
+        <button style="margin-left:7px;background:#FFD700;color:#fff;border:none;border-radius:5px;padding:5px 12px;cursor:pointer;font-size:13px;" onclick="navigator.clipboard.writeText('${inviteLink}');alert('Invite link copied!');">Copy</button>
       </div>
-      <div id="aiChatMessages" style="flex:1;min-height:210px;max-height:300px;overflow-y:auto;padding:15px 12px 10px 12px;background:#fffbe6;"></div>
-      <form id="aiChatForm" style="display:flex;gap:7px;padding:0 10px;">
-        <input id="aiChatInput" type="text" placeholder="Type your problem..." required style="flex:1;padding:10px 12px;border-radius:7px;border:1.5px solid #FFD700;font-size:15px;background:#fff;color:#B07B00;">
-        <button type="submit" style="background:#FFD700;color:#fff;padding:0 20px;border-radius:7px;border:none;font-size:15px;font-weight:700;cursor:pointer;">Send</button>
-      </form>
+      <div style="background:#fff;padding:13px;border-radius:12px;margin-bottom:12px;">
+        <h3 style="font-size:15px;color:#B07B00;">🪙 Level Income IND.Coin 🪙</h3>
+        <ul style="text-align:left;font-size:13px;">
+          <li>1st Level Bonus: <strong>5000 IND.coin</strong></li>
+          <li>2nd Level Bonus: <strong>2000 IND.coin</strong></li>
+          <li>3rd Level Bonus: <strong>1000 IND.coin</strong></li>
+        </ul>
+        <h3 style="font-size:15px;color:#B07B00;">🎁 Level Income Bonus 🎁</h3>
+        <ul style="text-align:left;font-size:13px;">
+          <li>1st Level Income: <strong>30%</strong></li>
+          <li>2nd Level Income: <strong>25%</strong></li>
+          <li>3rd Level Income: <strong>10%</strong></li>
+        </ul>
+        <p style="color:#B07B00;margin-top:7px;font-size:12px;">Invite your friends and earn bonuses up to 3 levels!</p>
+      </div>
+      <ol style="color:#B07B00;font-size:13px;margin-bottom:16px;text-align:left;padding-left:18px;">
+        <li>Share your Invite Link with friends.</li>
+        <li>When friends join using your link, you get Level Income Bonus.</li>
+        <li>Bigger network means more rewards!</li>
+      </ol>
+      <button onclick="document.body.removeChild(document.getElementById('inviteModal'))"
+        style="background:#FFD700;color:#fff;padding:10px 22px;border-radius:8px;border:none;font-size:15px;font-weight:700;margin-top:8px;cursor:pointer;width:100%;">Close</button>
     </div>
   `;
   document.body.appendChild(modal);
-
-  const messages = document.getElementById('aiChatMessages');
-  function addMsg(msg, who) {
-    let d = document.createElement('div');
-    d.style.cssText = 'margin-bottom:9px;text-align:' + (who === 'user' ? 'right' : 'left');
-    d.innerHTML = `<span style="display:inline-block;padding:9px 13px;border-radius:13px;max-width:82%;background:${who==='user'?'#FFD700':'#fff'};color:${who==='user'?'#fff':'#B07B00'};font-size:14px;text-align:left;">${msg}</span>`;
-    messages.appendChild(d);
-    messages.scrollTop = messages.scrollHeight;
+}
+// ---- Friend List Modal ----
+function openFriendListModal() {
+  const modal = document.getElementById("friendListModal");
+  const area = document.getElementById("friendListArea");
+  let friends = JSON.parse(localStorage.getItem("friends_" + userId) || "[]");
+  if (friends.length === 0) {
+    area.innerHTML = "<i>No friends invited yet.</i>";
+  } else {
+    area.innerHTML = "<b>Invited User IDs:</b><br>" + friends.map(fid => `<div style="margin:8px 0;background:#ffd70022;padding:6px 12px;border-radius:7px;display:inline-block;">${fid}</div>`).join("");
   }
-  addMsg(' IND.coin Support. Type your issue or question here.', 'ai')
-  document.getElementById('aiChatForm').onsubmit = function(e) {
-    e.preventDefault();
-    const input = document.getElementById('aiChatInput');
-    let userMsg = input.value.trim();
-    if (!userMsg) return;
-    addMsg(userMsg, 'user');
-    input.value = '';
-    setTimeout(()=>{
-      addMsg(generateAIReply(userMsg), 'ai');
-    }, 600);
-    return false;
-  };
+  modal.style.display = "flex";
 }
-function generateAIReply(msg) {
-  msg = msg.toLowerCase();
-  if (msg.includes('withdraw')) return "Withdrawal abhi available nahi hai. Jaldi aa raha hai! 🙏";
-  if (msg.includes('deposit')) return "Deposit ke liye Assets tab me 'Deposit' button par click karein, apna network select karein aur address/QR code copy karein.";
-  if (msg.includes('kyc')) return "Filhaal KYC ki zarurat nahi hai. Jaise hi shuru hoga, aapko notify kiya jayega.";
-  if (msg.includes('bonus') || msg.includes('refer')) return "Friends ko refer karne par aapko Level Income bonus milta hai! Details 'More' tab me dekhein.";
-  if (msg.includes('profile')) return "Profile update karne ke liye 'MY' tab me jaa kar form fill karein aur save karein.";
-  if (msg.includes('claim')) return "Mining claim karne ke liye Home tab me 'Claim' button dabayein. Balance aapke wallet me add ho jayega.";
-  if (msg.includes('exchange')) return "USDT/IND.COIN exchange ke liye Assets tab me Exchange option use karein.";
-  if (msg.includes('help') || msg.includes('problem')) return "Apni problem detail me likhein, main aapki madad karta hoon!";
-  return "Dhanyawaad! Aapka sawal receive hua. IND.COIN ki team aapko jaldi jawab degi. Aap aur bhi sawal pooch sakte hain.";
+function closeFriendListModal() { document.getElementById("friendListModal").style.display = "none"; }
+function openLegalModal() { document.getElementById("legalModal").style.display = "flex"; }
+function closeLegalModal() { document.getElementById("legalModal").style.display = "none"; }
+function openSupportModal() {
+  const modal = document.getElementById("supportModal");
+  const chatArea = document.getElementById("chatArea");
+  chatArea.innerHTML = `<div style="align-self:flex-start;background:#FFD70022;padding:8px 13px;border-radius:8px 8px 8px 2px;color:#B07B00;max-width:90%"><b>AI Support (IND.Coin):</b><br>Hi! How can I help you with your IND.Coin problem?</div>`;
+  modal.style.display = "flex";
+  setTimeout(()=>{document.getElementById("supportInput").focus()}, 200);
 }
-/* ---------- GAME LOGIC ENDS ---------- */
+function closeSupportModal() { document.getElementById("supportModal").style.display = "none"; }
+function sendSupportMessage() {
+  const input = document.getElementById("supportInput");
+  const chatArea = document.getElementById("chatArea");
+  const userMsg = input.value.trim();
+  if (userMsg === "") return;
+  chatArea.innerHTML += `<div style="align-self:flex-end;background:#FFD700;color:#fff;padding:8px 13px;border-radius:8px 8px 2px 8px;max-width:90%"><b>You:</b><br>${userMsg}</div>`;
+  input.value = "";
+  chatArea.scrollTop = chatArea.scrollHeight;
+  setTimeout(()=>{
+    chatArea.innerHTML += `<div style="align-self:flex-start;background:#FFD70022;padding:8px 13px;border-radius:8px 8px 8px 2px;color:#B07B00;max-width:90%"><b>AI Support (IND.Coin):</b><br>Thank you for contacting support. We'll help you with: <i>${userMsg}</i></div>`;
+    chatArea.scrollTop = chatArea.scrollHeight;
+  }, 600);
+}
+document.addEventListener("DOMContentLoaded", function() {
+  let lang = localStorage.getItem("gameLang") || "en";
+  updateUILanguage(lang);
+  updateMiningDisplay();
+});
 </script>
 </body>
 </html>
