@@ -3,31 +3,19 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>IND.Coin Game</title>
+  <title>IND.Coin</title>
   <link rel="icon" href="https://i.ibb.co/C38bkf7H/IMG-20250622-032411-164.webp" type="image/png">
   <style>
-    html, body {min-height:100vh; width:100vw; margin:0; padding:0; box-sizing:border-box; overflow-x:hidden; background:linear-gradient(120deg,#FFD700 0%,#FFA600 100%);background-size:200% 200%;animation:moveBg 12s linear infinite alternate;}
-    @keyframes moveBg {0%{background-position:0% 0%;}100%{background-position:100% 100%;}}
+    html,body{min-height:100vh;width:100vw;margin:0;padding:0;box-sizing:border-box;overflow-x:hidden;background:linear-gradient(120deg,#FFD700 0%,#FFA600 100%);}
     body{font-family:'Segoe UI',Arial,sans-serif;color:#7b5600;}
     #splash-screen{position:fixed;top:0;left:0;width:100vw;height:100vh;background:linear-gradient(135deg,#FFD700 0%,#FFA600 100%);display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:10000;}
-    @keyframes rotate3d { 0% { transform: rotateY(0deg) rotateZ(0deg);} 100% { transform: rotateY(360deg) rotateZ(360deg);}}
-    .fan-image{
-      animation: rotate3d 2.8s linear infinite;
-      box-shadow: 0 2px 22px #FFD70099, 0 3px 18px #FFA60055, 0 0 0 12px #fffbe6cc;
-      perspective: 400px;
-      width:124px;height:124px;margin:18px auto 8px;
-      border-radius:50%;
-      background-image:url('https://i.ibb.co/C38bkf7H/IMG-20250622-032411-164.webp');
-      background-size:cover;background-position:center;
-      border:4px solid #FFD700;cursor:pointer;
-      transition: animation-duration 0.2s;
-    }
-    .fan-image.fast-spin {animation-duration: 0.93s !important;}
-    .welcome-photo{width:108px;height:108px;border-radius:50%;margin-bottom:38px;object-fit:cover;background:#fff;box-shadow:0 2px 22px #FFD70099,0 3px 18px #FFA60055,0 0 0 12px #fffbe6cc;transition: box-shadow 0.2s, transform 0.15s;perspective: 400px;}
-    .welcome-photo.rotate {animation: rotate3d 1.25s linear infinite;}
-    .splash-title-btn {color:#FFD700;letter-spacing:1px;font-size:2.1em;font-weight:800;cursor:pointer;padding:10px 32px;border-radius:16px;transition:background 0.2s, box-shadow 0.2s;box-shadow:0 2px 24px #FFD70033;user-select:none;border:none;background:linear-gradient(90deg,#fffbe6 70%,#FFD700 100%);outline:none;margin-bottom:8px;}
-    .splash-title-btn:active, .splash-title-btn:hover {background:linear-gradient(90deg,#FFD700 70%,#FFA600 100%);color:#B07B00;}
-    .tab-bar{display:flex;justify-content:space-around;background:linear-gradient(90deg,#FFD700 60%,#FFA600 100%);border-top:2px solid #FFD700;padding:4px 0 2px 0;position:fixed;left:0;bottom:62px;width:100vw;height:62px;z-index:1000;box-shadow:0 -6px 22px #FFD70055, 0 2px 22px #fffbe6bb inset;backdrop-filter: blur(3px);margin-bottom:0;}
+    @keyframes rotate2d{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
+    .fan-image{animation:rotate2d var(--rot-speed,2.8s) linear infinite;position:relative;width:240px;height:240px;border-radius:50%;background-image:url('https://i.ibb.co/C38bkf7H/IMG-20250622-032411-164.webp');background-size:cover;background-position:center;border:5px solid #FFD700;box-shadow:0 6px 22px #FFD70033,0 0 0 16px #fffbe655;transition:box-shadow 0.18s;margin:22px auto 14px;}
+    .welcome-photo{width:108px;height:108px;border-radius:50%;margin-bottom:38px;object-fit:cover;background:#fff;box-shadow:0 2px 22px #FFD70099,0 3px 18px #FFA60055,0 0 0 12px #fffbe6cc;}
+    .welcome-photo.rotate{animation:rotate2d 1.25s linear infinite;}
+    .splash-title-btn{color:#FFD700;letter-spacing:1px;font-size:2.1em;font-weight:800;cursor:pointer;padding:10px 32px;border-radius:16px;transition:background 0.2s,box-shadow 0.2s;box-shadow:0 2px 24px #FFD70033;user-select:none;border:none;background:linear-gradient(90deg,#fffbe6 70%,#FFD700 100%);outline:none;margin-bottom:8px;}
+    .splash-title-btn:active,.splash-title-btn:hover{background:linear-gradient(90deg,#FFD700 70%,#FFA600 100%);color:#B07B00;}
+    .tab-bar{display:flex;justify-content:space-around;background:linear-gradient(90deg,#FFD700 60%,#FFA600 100%);border-top:2px solid #FFD700;padding:4px 0 2px 0;position:fixed;left:0;bottom:62px;width:100vw;height:62px;z-index:1000;box-shadow:0 -6px 22px #FFD70055,0 2px 22px #fffbe6bb inset;backdrop-filter:blur(3px);}
     .tab-button{background:none;border:none;border-radius:10px;color:#7b5600;font-size:13px;display:flex;flex-direction:column;align-items:center;flex:1;height:58px;font-weight:600;}
     .tab-button.active{background:linear-gradient(90deg,#ffe68c 80%,#FFD700 100%);color:#FFA600;}
     .bar-custom-icon{width:22px;height:22px;border-radius:50%;box-shadow:0 0 8px 2px #FFD700,0 2px 7px #FFA60044;background:#fff;border:2px solid #FFD700;margin-bottom:2px;object-fit:cover;}
@@ -36,65 +24,109 @@
     .tfun-btn{background:linear-gradient(120deg,#fffbe6 85%,#FFE066 100%);color:#B07B00;font-size:15px;font-weight:700;padding:11px 28px;border:2.2px solid #FFD700;border-radius:10px;display:flex;align-items:center;gap:7px;cursor:pointer;margin-bottom:7px;}
     .tfun-btn img{filter:grayscale(0) brightness(1) sepia(1) hue-rotate(-30deg) saturate(5) brightness(1.3);}
     .more-options{padding:0 2px;display:flex;flex-direction:column;gap:14px;margin-top:16px;}
-    .ind-footer{width:100vw;background:linear-gradient(90deg,#FFD700 70%,#FFA600 100%);color:#7b5600;text-align:center;font-size:15px;padding:16px 0 18px 0;font-weight:700;position:fixed;left:0;bottom:0;z-index:999;letter-spacing:0.3px;box-shadow:0 -2px 10px #FFD70022, 0 3px 12px #fffbe6bb inset;pointer-events:none;user-select:none;}
+    .ind-footer{width:100vw;background:linear-gradient(90deg,#FFD700 70%,#FFA600 100%);color:#7b5600;text-align:center;font-size:15px;padding:16px 0 18px 0;font-weight:700;position:fixed;left:0;bottom:0;z-index:999;letter-spacing:0.3px;box-shadow:0 -2px 10px #FFD70022,0 3px 12px #fffbe6bb inset;pointer-events:none;user-select:none;}
     .footer-logo{width:24px;height:24px;vertical-align:middle;border-radius:50%;margin-left:7px;object-fit:cover;}
     .tab-content{min-height:calc(100vh - 124px);padding:0 0 92px 0;background:linear-gradient(120deg,#FFFBE6 0%,#FFD70011 100%);}
-    .button-row{display:flex;flex-wrap:wrap;justify-content:center;gap:13px;margin:20px 0 24px;}
-    #invite-success-msg { color: #388e3c; font-weight:bold; font-size:15px; margin:12px 0 0 0; }
-    #supportModal, #legalModal, #languageModal, #friendListModal {display:none;position:fixed;left:0;top:0;width:100vw;height:100vh;z-index:999999;background:rgba(0,0,0,0.18);align-items:center;justify-content:center;}
-    #supportModal > div, #legalModal > div, #languageModal > div, #friendListModal > div {background:#fffbe6;max-width:340px;width:95vw;border-radius:14px;box-shadow:0 4px 18px #FFD70066;padding:0;display:flex;flex-direction:column;}
+    .button-row{display:flex;flex-wrap:wrap;justify-content:center;gap:13px;margin:20px 0 12px;}
+    #invite-success-msg{color:#388e3c;font-weight:bold;font-size:15px;margin:12px 0 0 0;}
+    #supportModal,#legalModal,#languageModal,#friendListModal{display:none;position:fixed;left:0;top:0;width:100vw;height:100vh;z-index:999999;background:rgba(0,0,0,0.18);align-items:center;justify-content:center;}
+    #supportModal>div,#legalModal>div,#languageModal>div,#friendListModal>div{background:#fffbe6;max-width:340px;width:95vw;border-radius:14px;box-shadow:0 4px 18px #FFD70066;padding:0;display:flex;flex-direction:column;}
     .lang-list{padding:24px 18px 18px 18px;display:flex;flex-direction:column;gap:10px;}
     .lang-item{display:flex;align-items:center;gap:13px;background:#ffe06633;padding:10px 13px;border-radius:8px;cursor:pointer;font-size:16px;transition:background 0.18s;}
     .lang-item.selected,.lang-item:hover{background:linear-gradient(90deg,#FFD700 60%,#FFA600 100%);color:#B07B00;}
     .lang-flag{width:22px;height:22px;border-radius:4px;object-fit:cover;border:1px solid #FFD700;}
-    @media (max-width:650px){
-      .centered,.balance-card{max-width:98vw;}
-      .tab-bar{height:62px;}
-      .ind-footer{font-size:13px;}
-      #supportModal > div, #legalModal > div, #languageModal > div, #friendListModal > div {max-width:98vw;}
+    .notif-popup{position:relative;top:0;left:0;right:0;margin:10px auto 0 auto;background:linear-gradient(90deg,#FFD700 80%,#FFA600 100%);color:#7b5600;font-weight:700;font-size:1.08em;padding:10px 24px;border-radius:12px;box-shadow:0 4px 16px #FFD70044;display:none;width:fit-content;max-width:90vw;animation:fadeinout 2.7s;z-index:2;}
+    @keyframes fadeinout{0%{opacity:0;}10%{opacity:1;}85%{opacity:1;}100%{opacity:0;}}
+    .legal-link-btn{width:100%;margin:8px 0;padding:13px 12px;font-size:17px;font-weight:bold;text-align:center;border-radius:10px;border:2px solid #FFD700;background:linear-gradient(90deg,#FFD700 60%,#FFA600 100%);color:#B07B00;cursor:pointer;transition:background 0.17s;text-decoration:none;display:block;}
+    .legal-link-btn:hover{background:linear-gradient(90deg,#FFA600 60%,#FFD700 100%);}
+    @media (max-width:650px){.centered,.balance-card{max-width:98vw;}.tab-bar{height:62px;}.ind-footer{font-size:13px;}#supportModal>div,#legalModal>div,#languageModal>div,#friendListModal>div{max-width:98vw;}.notif-popup{font-size:1em;padding:8px 5vw;}.fan-image{width:128px;height:128px;}}
+    /* Golden Notification Modal */
+    #notificationModal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: linear-gradient(120deg,#FFD700 0%,#FFA600 100%);
+      color: #7b5600;
+      z-index: 999999;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      transition: opacity 0.2s;
     }
+    #notificationModal.active { display: flex; }
+    .notification-content {
+      background: linear-gradient(120deg,#fffbe6 80%,#FFD700 100%);
+      border-radius: 16px;
+      padding: 24px 32px;
+      box-shadow: 0 6px 32px #FFD70033, 0 0 0 4px #fffbe655;
+      max-width: 96vw; max-height: 90vh;
+      overflow-y: auto; text-align: center;
+      border: 3px solid #FFA600;
+    }
+    .notification-content h2 { color: #B07B00; margin-top: 0; }
+    .notification-list { margin: 18px 0; text-align: left;}
+    .notification-list li { margin-bottom: 10px; font-size: 17px; color: #B07B00; }
+    .notif-close-btn {
+      margin-top: 18px; padding: 10px 32px;
+      background: linear-gradient(90deg,#FFD700 70%,#FFA600 100%);
+      color: #B07B00; border: none; border-radius: 8px;
+      font-weight: bold; font-size: 17px; cursor: pointer;
+      transition: background 0.2s;
+    }
+    .notif-close-btn:hover { background: linear-gradient(90deg,#FFA600 80%,#FFD700 100%);}
+    @media (max-width:650px){
+      .notification-content { padding: 12px 5vw; }
+    }
+    /* Big Notification Label */
+    #notificationTap {
+      font-size:2.3em;
+      font-weight:900;
+      color:#FFD700;
+      letter-spacing:0.06em;
+      margin:18px 0 0 0;
+      cursor:pointer;
+      text-shadow:0 2px 10px #fffbe6bb,0 2px 4px #B07B0070;
+      background: none;
+      border: none;
+      outline: none;
+      display: inline-block;
+      line-height: 1.1;
+      transition: color 0.2s;
+      user-select: none;
+    }
+    #notificationTap:hover { color: #FFA600; }
   </style>
 </head>
 <body>
 <!-- Splash Screen -->
 <div id="splash-screen">
   <img src="https://i.ibb.co/C38bkf7H/IMG-20250622-032411-164.webp" alt="Welcome" class="welcome-photo" id="splashPhoto" />
-  <button class="splash-title-btn" id="startGameBtn">
-    IND.Coin
-  </button>
+  <button class="splash-title-btn" id="startGameBtn">IND.Coin</button>
 </div>
 <!-- Home Tab -->
 <div id="home" class="tab-content" style="display:none;">
   <div class="centered">
-    <div class="balance-card" id="balance-card">
-      Balance: <strong>0.000000 IND.COIN</strong>
-    </div>
-    <div class="fan-image" id="fanImage"></div>
-    <div style="font-size:16px;margin-bottom:5px;color:#B07B00;">
-      <span id="live-balance">0.000000000 IND.coin</span>
-    </div>
-    <div style="font-size:14px;color:#B07B00;">
-      <span class="label-hashrate">Hashrate</span>: <span id="hashrate-display">2</span> GH/s ⚡
-    </div>
+    <div class="balance-card" id="balance-card">Balance: <strong>0.000000 IND.COIN</strong></div>
+    <div class="fan-image" id="fanImage" title="Mining in progress..."></div>
+    <div style="font-size:16px;margin-bottom:5px;color:#B07B00;"><span id="live-balance">0.000000000 IND.coin</span></div>
+    <div style="font-size:14px;color:#B07B00;"><span class="label-hashrate">Hashrate</span>: <span id="hashrate-display">2</span> GH/s ⚡</div>
     <div class="button-row">
-      <button class="tfun-btn" id="claimBtn" onclick="claimCoins()">
-        <img src="https://img.icons8.com/ios-filled/50/FFD700/stack-of-coins.png" width="20" /> <span class="label-claim">Claim</span>
-      </button>
-      <button class="tfun-btn" onclick="boostHashrate()">
-        <img src="https://img.icons8.com/ios-filled/50/FFD700/flash-on.png" width="20" /> <span class="label-boost">Boost</span>
-      </button>
+      <button class="tfun-btn" id="claimBtn"><img src="https://img.icons8.com/ios-filled/50/FFD700/stack-of-coins.png" width="20" /> <span class="label-claim">Claim</span></button>
+      <button class="tfun-btn" id="boostBtn"><img src="https://img.icons8.com/ios-filled/50/FFD700/flash-on.png" width="20" /> <span class="label-boost">Boost</span></button>
     </div>
+    <div class="notif-popup" id="notifPopup"></div>
     <div id="invite-success-msg"></div>
-    <div style="margin-top:25px;color:#B07B00;font-size:12px;">
-      <span class="label-userid">Your user ID</span>: <span id="userId"></span>
-    </div>
+    <div style="margin-top:25px;color:#B07B00;font-size:12px;"><span class="label-userid">Your user ID</span>: <span id="userId"></span></div>
+    <!-- Big Notification Label -->
+    <div id="notificationTap">ᴺᵒᵗⁱᶠⁱᶜᵃᵗⁱᵒⁿ</div>
   </div>
 </div>
 <!-- More Tab -->
 <div id="more" class="tab-content centered" style="display:none;">
   <div class="centered" style="margin-top:12px;background:#FFFBE6;box-shadow:none;">
     <div class="more-options">
-      <button class="tfun-btn" onclick="alert('Your ID copied!')"><img src="https://img.icons8.com/ios-filled/50/FFD700/id-verified.png" width="18"/> <span class="label-myid">My ID</span> <span id="userId2" style="font-weight:600;margin-left:auto;">Loading...</span></button>
+      <button class="tfun-btn" onclick="copyMyId()"><img src="https://img.icons8.com/ios-filled/50/FFD700/id-verified.png" width="18"/> <span class="label-myid">My ID</span> <span id="userId2" style="font-weight:600;margin-left:auto;">Loading...</span></button>
       <button class="tfun-btn" onclick="openInviteModal()"><img src="https://img.icons8.com/ios-filled/50/FFD700/add-user-group-man-man--v1.png" width="18" /> <span class="label-invite">Invite Friend</span></button>
       <button class="tfun-btn" onclick="openFriendListModal()"><img src="https://img.icons8.com/ios-filled/50/FFD700/group-foreground-selected.png" width="18"/> Friend List</button>
       <button class="tfun-btn" onclick="openLanguageModal()"><img src="https://img.icons8.com/ios-filled/50/FFD700/language.png" width="18"/> <span class="label-language">Language</span> <span id="activeLanguageIcon" style="margin-left:auto;"><img src="https://flagcdn.com/us.svg" width="16"/> English</span></button>
@@ -114,7 +146,6 @@
     <span class="label-more">More</span>
   </button>
 </div>
-<!-- Footer -->
 <div class="ind-footer">
   <span class="label-powered">Powered by</span> <b>IND.coin</b>
   <img src="https://i.ibb.co/C38bkf7H/IMG-20250622-032411-164.webp" class="footer-logo" alt="IND.COIN Logo">
@@ -140,9 +171,9 @@
       <b style="font-size:1.15em;color:#B07B00;" class="label-legal-info">Legal Info</b>
       <button onclick="closeLegalModal()" style="float:right;background:transparent;border:none;font-size:23px;cursor:pointer;color:#FFD700;">&times;</button>
     </div>
-    <div style="padding:24px 22px 20px 22px; display:flex; flex-direction:column; gap:22px; align-items:center;">
-      <button style="width:100%;background:linear-gradient(90deg,#FFD700 60%,#FFA600 100%);color:#B07B00;font-size:17px;font-weight:700;padding:13px 12px;border-radius:10px;border:2px solid #FFD700;cursor:pointer;" onclick="window.open('https://t.me/+_J-uxL38oSo3NDI1','_blank')">Channel 1 (Chanchal 1)</button>
-      <button style="width:100%;background:linear-gradient(90deg,#FFE066 60%,#FFD700 100%);color:#B07B00;font-size:17px;font-weight:700;padding:13px 12px;border-radius:10px;border:2px solid #FFD700;cursor:pointer;" onclick="window.open('https://t.me/+Lki3cyjdtb9kNDNl','_blank')">Chanchal 2</button>
+    <div style="padding:24px 22px 20px 22px; display:flex; flex-direction:column; gap:0; align-items:center;">
+      <a class="legal-link-btn" href="https://t.me/IND_coin_costumer_support_bot" target="_blank">Channel 1 (IND Coin Support Bot)</a>
+      <a class="legal-link-btn" href="https://t.me/+_J-uxL38oSo3NDI1" target="_blank">Channel 2 (Group)</a>
     </div>
   </div>
 </div>
@@ -164,6 +195,14 @@
       <button onclick="closeFriendListModal()" style="float:right;background:transparent;border:none;font-size:23px;cursor:pointer;color:#FFD700;">&times;</button>
     </div>
     <div id="friendListArea" style="padding:20px 12px;min-height:100px;max-height:220px;overflow:auto;font-size:15px;text-align:left;"></div>
+  </div>
+</div>
+<!-- Notification Modal GOLDEN -->
+<div id="notificationModal">
+  <div class="notification-content">
+    <h2>Notifications</h2>
+    <ul class="notification-list" id="notificationList"></ul>
+    <button class="notif-close-btn" onclick="closeNotificationModal()">Close</button>
   </div>
 </div>
 <script>
@@ -191,15 +230,9 @@ const TRANSLATIONS = {
     invite: "Invite Friend", myid: "My ID", support: "Support", legal: "Legal Info", selectLanguage: "Select Language",
     hashrate: "Hashrate", userid: "Your user ID", contactSupport: "Contact Support", legalInfo: "Legal Info",
     send: "Send"
-  },
-  hi: { home:"मुख्य", more:"अधिक", powered:"द्वारा संचालित", claim:"क्लेम करें", boost:"बूस्ट", language:"भाषा", invite:"मित्र आमंत्रित करें", myid:"मेरी आईडी", support:"सहायता", legal:"कानूनी जानकारी", selectLanguage:"भाषा चुनें", hashrate:"हैशरेट", userid:"आपकी यूज़र आईडी", contactSupport:"संपर्क सहायता", legalInfo:"कानूनी जानकारी", send:"भेजें" },
-  es: { home:"Inicio", more:"Más", powered:"Desarrollado por", claim:"Reclamar", boost:"Impulsar", language:"Idioma", invite:"Invitar amigo", myid:"Mi ID", support:"Soporte", legal:"Información legal", selectLanguage:"Seleccionar idioma", hashrate:"Potencia", userid:"Tu ID de usuario", contactSupport:"Contactar soporte", legalInfo:"Información legal", send:"Enviar" },
-  fr: { home:"Accueil", more:"Plus", powered:"Propulsé par", claim:"Réclamer", boost:"Booster", language:"Langue", invite:"Inviter un ami", myid:"Mon ID", support:"Support", legal:"Infos légales", selectLanguage:"Choisir la langue", hashrate:"Taux de hachage", userid:"Votre ID utilisateur", contactSupport:"Contacter le support", legalInfo:"Infos légales", send:"Envoyer" },
-  de: { home:"Start", more:"Mehr", powered:"Angetrieben von", claim:"Beanspruchen", boost:"Boost", language:"Sprache", invite:"Freund einladen", myid:"Meine ID", support:"Support", legal:"Rechtliches", selectLanguage:"Sprache wählen", hashrate:"Hashrate", userid:"Ihre Benutzer-ID", contactSupport:"Support kontaktieren", legalInfo:"Rechtliches", send:"Senden" }
+  }
 };
-function getLangObj(code) {
-  return TRANSLATIONS[code] || TRANSLATIONS['en'];
-}
+function getLangObj(code) { return TRANSLATIONS[code] || TRANSLATIONS['en']; }
 function updateUILanguage(lang) {
   const t = getLangObj(lang);
   document.querySelector('.label-home').textContent = t.home;
@@ -241,16 +274,12 @@ function selectLanguage(code) {
   updateUILanguage(code);
   closeLanguageModal();
 }
-
-// --- Main Game Logic ---
 let userId = localStorage.getItem("userId");
 if (!userId) { userId = Math.floor(Math.random() * 1e10).toString(); localStorage.setItem("userId", userId); }
 let walletBalance = parseFloat(localStorage.getItem("walletBalance")) || 0;
 let miningBalance = parseFloat(localStorage.getItem("miningBalance")) || 0;
 let hashrate = parseInt(localStorage.getItem("hashrate")) || 2;
 const miningRate = 0.00000009110;
-
-// --- Referral/Invite logic ---
 function getUrlParam(name) {
   const match = window.location.search.match(new RegExp('[?&]' + name + '=([^&]+)'));
   return match ? decodeURIComponent(match[1]) : null;
@@ -276,14 +305,20 @@ function handleReferralOnFirstVisit() {
   }
 }
 handleReferralOnFirstVisit();
-
+function updateCoinRotationSpeed() {
+    let base = 2.8;
+    let speed = hashrate > 0 ? base * (2 / hashrate) : base;
+    if(speed < 0.28) speed = 0.28;
+    if(speed > 5) speed = 5;
+    document.getElementById("fanImage").style.setProperty('--rot-speed', speed + "s");
+}
 function updateMiningDisplay() {
   if(document.getElementById('balance-card')) document.getElementById('balance-card').innerHTML = `Balance: <strong>${walletBalance.toFixed(6)} IND.COIN</strong>`;
   if(document.getElementById('live-balance')) document.getElementById('live-balance').innerText = `${miningBalance.toFixed(9)} IND.coin`;
   if(document.getElementById('hashrate-display')) document.getElementById('hashrate-display').innerText = hashrate;
   if(document.getElementById("userId")) document.getElementById("userId").innerText = userId;
   if(document.getElementById("userId2")) document.getElementById("userId2").innerText = userId;
-  if(document.getElementById('wallet-balance-card')) document.getElementById('wallet-balance-card').innerHTML = `Assets Balance: <strong>${walletBalance.toFixed(6)} IND.COIN</strong>`;
+  updateCoinRotationSpeed();
 }
 function mineCoins() {
   miningBalance += hashrate * miningRate;
@@ -299,6 +334,7 @@ function startApp() {
   document.getElementById("home").style.display = "block";
   document.querySelector(".tab-bar").style.display = "flex";
   updateMiningDisplay();
+  showNotif("🎉 Full Update Complete! Enjoy Mining. 🎉");
   startAutoMining();
 }
 document.getElementById("startGameBtn").onclick = function() {
@@ -309,19 +345,8 @@ document.getElementById("startGameBtn").onclick = function() {
   setTimeout(function() {
     photo.classList.remove("rotate");
     startApp();
-  }, 5000);
+  }, 2500);
 };
-// FAN SPIN LOGIC (ONLY IMAGE FAST, GH/S NORMAL)
-const fanImage = document.getElementById("fanImage");
-let fanTimeout = null;
-fanImage.addEventListener("click", function() {
-  fanImage.classList.add("fast-spin");
-  if (fanTimeout) clearTimeout(fanTimeout);
-  fanTimeout = setTimeout(function() {
-    fanImage.classList.remove("fast-spin");
-  }, 6000); // 6 seconds
-});
-
 function showTab(tabId) {
   document.querySelectorAll(".tab-content").forEach(tab => tab.style.display = "none");
   document.getElementById(tabId).style.display = "block";
@@ -330,50 +355,59 @@ function showTab(tabId) {
   if (clickedButton) clickedButton.classList.add("active");
   updateMiningDisplay();
 }
-function claimCoins() {
+document.getElementById('claimBtn').onclick = function() {
   if (miningBalance > 0) {
     walletBalance += miningBalance;
     miningBalance = 0;
     localStorage.setItem("walletBalance", walletBalance.toString());
     localStorage.setItem("miningBalance", miningBalance.toString());
     updateMiningDisplay();
-    alert("Successfully Claimed!");
+    document.getElementById("invite-success-msg").textContent = "";
+    showNotif("Successfully Claimed!");
   } else {
-    alert("No IND.coin available to claim.");
+    showNotif("No IND.coin available to claim.");
   }
-}
-function boostHashrate() { alert('soon'); }
-function toggleExchangeMenu() { alert('Exchange feature coming soon!'); }
-function openDepositModal() { alert('Deposit feature coming soon!'); }
-// ---------- Invite Modal ----------
+};
+let boostActive = false;
+let origHashrate = hashrate;
+document.getElementById('boostBtn').onclick = function() {
+  if(boostActive) { showNotif("Boost already active!"); return; }
+  boostActive = true;
+  origHashrate = hashrate;
+  hashrate = Math.round(hashrate * 2.5);
+  localStorage.setItem("hashrate", hashrate.toString());
+  updateMiningDisplay();
+  showNotif("🚀 Boost Activated! x2.5 Hashrate for 20s");
+  setTimeout(()=>{
+    hashrate = origHashrate;
+    localStorage.setItem("hashrate", hashrate.toString());
+    updateMiningDisplay();
+    showNotif("Boost Ended.");
+    boostActive = false;
+  }, 20000);
+};
 function openInviteModal() {
   if (document.getElementById('inviteModal')) return;
-  let inviteLink = `https://t.me/Unique_IND_coin_bot?start=${userId}`;
+  let inviteLink = `IND.coin-game?start=${userId}`;
   let modal = document.createElement('div');
   modal.id = 'inviteModal';
   modal.style.cssText = 'position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;z-index:999999;';
   modal.innerHTML = `
     <div style="background:#fffbe6;padding:26px 22px 18px 22px;min-width:320px;border-radius:14px;box-shadow:0 4px 24px #FFD70044;max-width:94vw;">
       <h2 style="color:#B07B00;font-size:1.17em;margin-top:0;">
-        <img src="https://img.icons8.com/ios-filled/50/FFD700/add-user-group-man-man--v1.png" width="24" style="vertical-align:middle;"/> Invite Friends
+        <img src="https://img.icons8.com/ios-filled/50/FFD700/add-user-group" style="vertical-align:middle;"/> Invite Friends
       </h2>
       <div style="margin-bottom:16px;font-size:15px;">
         <b>Your Invite Link:</b>
         <span style="background:#FFD70022;padding:6px 13px;border-radius:8px;font-size:15px;color:#B07B00;display:inline-block;word-break:break-all;margin-left:0;">${inviteLink}</span>
-        <button style="margin-left:7px;background:#FFD700;color:#fff;border:none;border-radius:5px;padding:5px 12px;cursor:pointer;font-size:13px;" onclick="navigator.clipboard.writeText('${inviteLink}');alert('Invite link copied!');">Copy</button>
+        <button style="margin-left:7px;background:#FFD700;color:#fff;border:none;border-radius:5px;padding:5px 12px;cursor:pointer;font-size:13px;" onclick="navigator.clipboard.writeText('${inviteLink}');showNotif('Invite link copied!');">Copy</button>
       </div>
       <div style="background:#fff;padding:13px;border-radius:12px;margin-bottom:12px;">
         <h3 style="font-size:15px;color:#B07B00;">🪙 Level Income IND.Coin 🪙</h3>
         <ul style="text-align:left;font-size:13px;">
-          <li>1st Level Bonus: <strong>5000 IND.coin</strong></li>
-          <li>2nd Level Bonus: <strong>2000 IND.coin</strong></li>
-          <li>3rd Level Bonus: <strong>1000 IND.coin</strong></li>
-        </ul>
-        <h3 style="font-size:15px;color:#B07B00;">🎁 Level Income Bonus 🎁</h3>
-        <ul style="text-align:left;font-size:13px;">
-          <li>1st Level Income: <strong>30%</strong></li>
-          <li>2nd Level Income: <strong>25%</strong></li>
-          <li>3rd Level Income: <strong>10%</strong></li>
+          <li>1st Level Bonus: <strong>5000 IND.coin (30%)</strong></li>
+          <li>2nd Level Bonus: <strong>2000 IND.coin (25%)</strong></li>
+          <li>3rd Level Bonus: <strong>1000 IND.coin (10%)</strong></li>
         </ul>
         <p style="color:#B07B00;margin-top:7px;font-size:12px;">Invite your friends and earn bonuses up to 3 levels!</p>
       </div>
@@ -388,7 +422,6 @@ function openInviteModal() {
   `;
   document.body.appendChild(modal);
 }
-// ---- Friend List Modal ----
 function openFriendListModal() {
   const modal = document.getElementById("friendListModal");
   const area = document.getElementById("friendListArea");
@@ -424,11 +457,42 @@ function sendSupportMessage() {
     chatArea.scrollTop = chatArea.scrollHeight;
   }, 600);
 }
+function showNotif(msg) {
+  const pop = document.getElementById("notifPopup");
+  pop.innerHTML = msg;
+  pop.style.display = "block";
+  setTimeout(() => {pop.style.display = "none";}, 2200);
+}
+function copyMyId() {
+  navigator.clipboard.writeText(userId);
+  showNotif("Your ID copied!");
+}
+// Notification system
+const notifications = [
+  "👋 Welcome to IND.Coin!",
+  "🚀  support to all System ",
+  "💡  crypto wellet option soon",
+  "🎁 high  IMPORTANT note invite progress ",
+  "🛡️ Your progress safe journey ☺️."
+];
+function openNotificationModal() {
+  const modal = document.getElementById("notificationModal");
+  const list = document.getElementById("notificationList");
+  list.innerHTML = notifications.map(n => `<li>${n}</li>`).join("");
+  modal.classList.add("active");
+}
+function closeNotificationModal() {
+  document.getElementById("notificationModal").classList.remove("active");
+}
 document.addEventListener("DOMContentLoaded", function() {
   let lang = localStorage.getItem("gameLang") || "en";
   updateUILanguage(lang);
   updateMiningDisplay();
+  document.getElementById("notificationTap").onclick = openNotificationModal;
 });
+document.getElementById("notificationModal").onclick = function(e){
+  if(e.target === this) closeNotificationModal();
+};
 </script>
 </body>
 </html>
