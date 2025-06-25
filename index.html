@@ -30,7 +30,7 @@
     .button-row{display:flex;flex-wrap:wrap;justify-content:center;gap:13px;margin:20px 0 12px;}
     #invite-success-msg{color:#388e3c;font-weight:bold;font-size:15px;margin:12px 0 0 0;}
     #supportModal,#legalModal,#languageModal,#friendListModal{display:none;position:fixed;left:0;top:0;width:100vw;height:100vh;z-index:999999;background:rgba(0,0,0,0.18);align-items:center;justify-content:center;}
-    #supportModal>div,#legalModal>div,#languageModal>div,#friendListModal>div{background:#fffbe6;max-width:340px;width:95vw;border-radius:14px;box-shadow:0 4px 18px #FFD70066;padding:0;display:flex;flex-direction:column;}
+    #supportModal>div,#languageModal>div,#friendListModal>div{background:#fffbe6;max-width:340px;width:95vw;border-radius:14px;box-shadow:0 4px 18px #FFD70066;padding:0;display:flex;flex-direction:column;}
     .lang-list{padding:24px 18px 18px 18px;display:flex;flex-direction:column;gap:10px;}
     .lang-item{display:flex;align-items:center;gap:13px;background:#ffe06633;padding:10px 13px;border-radius:8px;cursor:pointer;font-size:16px;transition:background 0.18s;}
     .lang-item.selected,.lang-item:hover{background:linear-gradient(90deg,#FFD700 60%,#FFA600 100%);color:#B07B00;}
@@ -40,53 +40,16 @@
     .legal-link-btn{width:100%;margin:8px 0;padding:13px 12px;font-size:17px;font-weight:bold;text-align:center;border-radius:10px;border:2px solid #FFD700;background:linear-gradient(90deg,#FFD700 60%,#FFA600 100%);color:#B07B00;cursor:pointer;transition:background 0.17s;text-decoration:none;display:block;}
     .legal-link-btn:hover{background:linear-gradient(90deg,#FFA600 60%,#FFD700 100%);}
     @media (max-width:650px){.centered,.balance-card{max-width:98vw;}.tab-bar{height:62px;}.ind-footer{font-size:13px;}#supportModal>div,#legalModal>div,#languageModal>div,#friendListModal>div{max-width:98vw;}.notif-popup{font-size:1em;padding:8px 5vw;}.fan-image{width:128px;height:128px;}}
-    /* Golden Notification Modal */
-    #notificationModal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background: linear-gradient(120deg,#FFD700 0%,#FFA600 100%);
-      color: #7b5600;
-      z-index: 999999;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      transition: opacity 0.2s;
-    }
+    #notificationModal {display: none;position: fixed;top: 0; left: 0;width: 100vw; height: 100vh;background: linear-gradient(120deg,#FFD700 0%,#FFA600 100%);color: #7b5600;z-index: 999999;justify-content: center;align-items: center;flex-direction: column;transition: opacity 0.2s;}
     #notificationModal.active { display: flex; }
-    .notification-content {
-      background: linear-gradient(120deg,#fffbe6 80%,#FFD700 100%);
-      border-radius: 16px;
-      padding: 24px 32px;
-      box-shadow: 0 6px 32px #FFD70033, 0 0 0 4px #fffbe655;
-      max-width: 96vw; max-height: 90vh;
-      overflow-y: auto; text-align: center;
-      border: 3px solid #FFA600;
-    }
+    .notification-content {background: linear-gradient(120deg,#fffbe6 80%,#FFD700 100%);border-radius: 16px;padding: 24px 32px;box-shadow: 0 6px 32px #FFD70033, 0 0 0 4px #fffbe655;max-width: 96vw; max-height: 90vh;overflow-y: auto; text-align: center;border: 3px solid #FFA600;}
     .notification-content h2 { color: #B07B00; margin-top: 0; }
     .notification-list { margin: 18px 0; text-align: left;}
     .notification-list li { margin-bottom: 10px; font-size: 17px; color: #B07B00; }
-    .notif-close-btn {
-      margin-top: 18px; padding: 10px 32px;
-      background: linear-gradient(90deg,#FFD700 70%,#FFA600 100%);
-      color: #B07B00; border: none; border-radius: 8px;
-      font-weight: bold; font-size: 17px; cursor: pointer;
-      transition: background 0.2s;
-    }
-    .notif-close-btn:hover { background: linear-gradient(:#FFD700;
-      letter-spacing:0.06em;
-      margin:18px 0 0 0;
-      cursor:pointer;
-      text-shadow:0 2px 10px #fffbe6bb,0 2px 4px #B07B0070;
-      background: none;
-      border: none;
-      outline: none;
-      display: inline-block;
-      line-height: 1.1;
-      transition: color 0.2s;
-      user-select: none;
-    }
+    .notif-close-btn {margin-top: 18px; padding: 10px 32px;background: linear-gradient(90deg,#FFD700 70%,#FFA600 100%);color: #B07B00; border: none; border-radius: 8px;font-weight: bold; font-size: 17px; cursor: pointer;transition: background 0.2s;}
+    .notif-close-btn:hover { background: linear-gradient(90deg,#FFA600 80%,#FFD700 100%);}
+    @media (max-width:650px){.notification-content { padding: 12px 5vw; }}
+    #notificationTap {font-size:2.3em;font-weight:900;color:#FFD700;letter-spacing:0.06em;margin:18px 0 0 0;cursor:pointer;text-shadow:0 2px 10px #fffbe6bb,0 2px 4px #B07B0070;background: none;border: none;outline: none;display: inline-block;line-height: 1.1;transition: color 0.2s;user-select: none;}
     #notificationTap:hover { color: #FFA600; }
   </style>
 </head>
@@ -110,7 +73,6 @@
     <div class="notif-popup" id="notifPopup"></div>
     <div id="invite-success-msg"></div>
     <div style="margin-top:25px;color:#B07B00;font-size:12px;"><span class="label-userid">Your user ID</span>: <span id="userId"></span></div>
-    <!-- Big Notification Label -->
     <div id="notificationTap">ᴺᵒᵗⁱᶠⁱᶜᵃᵗⁱᵒⁿ</div>
   </div>
 </div>
@@ -164,9 +126,8 @@
       <button onclick="closeLegalModal()" style="float:right;background:transparent;border:none;font-size:23px;cursor:pointer;color:#FFD700;">&times;</button>
     </div>
     <div style="padding:24px 22px 20px 22px; display:flex; flex-direction:column; gap:0; align-items:center;">
-      <!-- UPDATED LINKS -->
-      <a class="legal-link-btn" href="https://t.me/IND_coin_official_group" target="_blank">Channel 1 (IND Coin Official Group)</a>
-      <a class="legal-link-btn" href="https://t.me/IND_coin_official_update" target="_blank">Channel 2 (Official Update)</a>
+      <a class="legal-link-btn" href="https://t.me/IND_coin_official_group" target="_blank"> (IND.coin official group )</a>
+      <a class="legal-link-btn" href="https://t.me/IND_coin_official_update" target="_blank">(official update)</a>
     </div>
   </div>
 </div>
@@ -361,23 +322,9 @@ document.getElementById('claimBtn').onclick = function() {
     showNotif("No IND.coin available to claim.");
   }
 };
-let boostActive = false;
-let origHashrate = hashrate;
+// BOOST BUTTON: Show "Boost system soon" only
 document.getElementById('boostBtn').onclick = function() {
-  if(boostActive) { showNotif("Boost already active!"); return; }
-  boostActive = true;
-  origHashrate = hashrate;
-  hashrate = Math.round(hashrate * 2.5);
-  localStorage.setItem("hashrate", hashrate.toString());
-  updateMiningDisplay();
-  showNotif("🚀 Boost Activated! x2.5 Hashrate for 20s");
-  setTimeout(()=>{
-    hashrate = origHashrate;
-    localStorage.setItem("hashrate", hashrate.toString());
-    updateMiningDisplay();
-    showNotif("Boost Ended.");
-    boostActive = false;
-  }, 20000);
+  showNotif("Boost system soon");
 };
 function openInviteModal() {
   if (document.getElementById('inviteModal')) return;
@@ -460,11 +407,10 @@ function copyMyId() {
   navigator.clipboard.writeText(userId);
   showNotif("Your ID copied!");
 }
-// Notification system
 const notifications = [
   "👋 Welcome to IND.Coin!",
   "🚀  support to all System ",
-  "💡  crypto wallet option soon",
+  "💡  crypto wellet option soon",
   "🎁 high  IMPORTANT note invite progress ",
   "🛡️ Your progress safe journey ☺️."
 ];
