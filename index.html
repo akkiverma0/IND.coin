@@ -62,7 +62,7 @@
 <!-- Home Tab -->
 <div id="home" class="tab-content" style="display:none;">
   <div class="centered">
-    <div class="balance-card" id="balance-card">Balance: <strong>0.000000 IND.coin</strong></div>
+    <div class="balance-card" id="balance-card">Balance: <strong>0.000000 IND.COIN</strong></div>
     <div class="fan-image" id="fanImage" title="Mining in progress..."></div>
     <div style="font-size:16px;margin-bottom:5px;color:#B07B00;"><span id="live-balance">0.000000000 IND.coin</span></div>
     <div style="font-size:14px;color:#B07B00;"><span class="label-hashrate">Hashrate</span>: <span id="hashrate-display">2</span> GH/s ⚡</div>
@@ -267,7 +267,7 @@ function updateCoinRotationSpeed() {
     document.getElementById("fanImage").style.setProperty('--rot-speed', speed + "s");
 }
 function updateMiningDisplay() {
-  if(document.getElementById('balance-card')) document.getElementById('balance-card').innerHTML = `Balance: <strong>${walletBalance.toFixed(6)} IND.COIN</strong>`;
+  if(document.getElementById('balance-card')) document.getElementById('balance-card').innerHTML = `Balance: <strong>${walletBalance.toFixed(6)} IND.coin</strong>`;
   if(document.getElementById('live-balance')) document.getElementById('live-balance').innerText = `${miningBalance.toFixed(9)} IND.coin`;
   if(document.getElementById('hashrate-display')) document.getElementById('hashrate-display').innerText = hashrate;
   if(document.getElementById("userId")) document.getElementById("userId").innerText = userId;
